@@ -42,9 +42,19 @@ class Listing(models.Model):
         return self.title
 
     def formatted_price(self):
-        if self.price:
-            return f"{self.price:,}"
-        return 'توافقی'
+        if not self.price:
+            return 'توافقی'
+        p = self.price
+        if p >= 1_000_000_000_000:
+            val = p / 1_000_000_000_000
+            return f"{val:,.0f} هزار میلیارد" if val == int(val) else f"{val:.1f} هزار میلیارد"
+        if p >= 1_000_000_000:
+            val = p / 1_000_000_000
+            return f"{val:,.0f} میلیارد" if val == int(val) else f"{val:.1f} میلیارد"
+        if p >= 1_000_000:
+            val = p / 1_000_000
+            return f"{val:,.0f} میلیون" if val == int(val) else f"{val:.1f} میلیون"
+        return f"{p:,}"
 
 
 class Category(models.Model):

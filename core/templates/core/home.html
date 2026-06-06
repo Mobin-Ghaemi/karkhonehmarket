@@ -396,43 +396,37 @@
         <div class="listings-grid">
             {% for item in recent %}
             <a href="{% url 'listing_detail' item.pk %}" class="lcard">
-                <div class="lcard-img">
+                <div class="lcard-img-wrap">
                     {% if item.image %}
-                        <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    <img class="lcard-img" src="{{ item.image.url }}" alt="{{ item.title }}">
                     {% else %}
-                        <div class="lcard-ph lcard-ph--{{ item.category }}">
-                            <div class="lcard-ph-grid"></div>
-                            <div class="lcard-ph-glow"></div>
-                            <div class="lcard-ph-icon">
-                                {% if item.category == 'land' %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-                                {% elif item.category == 'factory' %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 20V8l6-4v4l6-4v4l6-4v16H2z"/><rect x="9" y="14" width="3" height="6"/><rect x="15" y="14" width="3" height="6"/><rect x="3" y="14" width="3" height="6"/></svg>
-                                {% elif item.category == 'machinery' %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                                {% elif item.category == 'import' %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
-                                {% elif item.category == 'export' %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 21c.6.5 1.2 1 2.5 1C7 22 7 20 9.5 20s2.5 2 5 2 2.5-2 5-2c1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 4.56 2.28 8.12 5.38 9.94"/><path d="M19 13V7a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v6"/></svg>
-                                {% else %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                                {% endif %}
-                            </div>
+                    <div class="lcard-ph lcard-ph--{{ item.category }}">
+                        <div class="lcard-ph-grid"></div>
+                        <div class="lcard-ph-glow"></div>
+                        <div class="lcard-icon-center">
+                            {% if item.category == 'land' %}<svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+                            {% elif item.category == 'factory' %}<svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M2 20V8l6-4v4l6-4v4l6-4v16H2z"/><rect x="9" y="14" width="3" height="6"/><rect x="15" y="14" width="3" height="6"/><rect x="3" y="14" width="3" height="6"/></svg>
+                            {% elif item.category == 'machinery' %}<svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                            {% elif item.category == 'import' %}<svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
+                            {% elif item.category == 'export' %}<svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M2 21c.6.5 1.2 1 2.5 1C7 22 7 20 9.5 20s2.5 2 5 2 2.5-2 5-2c1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 4.56 2.28 8.12 5.38 9.94"/><path d="M19 13V7a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v6"/></svg>
+                            {% else %}<svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>{% endif %}
                         </div>
+                    </div>
                     {% endif %}
-                    <span class="lcard-status lcard-status--{{ item.status }}">{{ item.get_status_display }}</span>
-                    {% if item.is_featured %}<span class="lcard-vip">★ ویژه</span>{% endif %}
+                    <div class="lcard-badges">
+                        {% if item.is_featured %}<span class="lcard-vip">★ ویژه</span>{% endif %}
+                        <span class="lcard-status lcard-status--{{ item.status }}">{{ item.get_status_display }}</span>
+                    </div>
                 </div>
                 <div class="lcard-body">
                     <div class="lcard-cat">{{ item.get_category_display }}</div>
                     <div class="lcard-title">{{ item.title }}</div>
-                    <div class="lcard-loc">
-                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        {{ item.location }}
-                    </div>
-                    <div class="lcard-foot">
-                        <div>
-                            <div class="lcard-price">{{ item.formatted_price }}</div>
-                            {% if item.price %}<div class="lcard-price-unit">تومان</div>{% endif %}
+                    <div class="lcard-meta-row">
+                        <div class="lcard-loc">
+                            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            {{ item.location }}
                         </div>
-                        {% if item.area %}<div class="lcard-area">
-                            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 3H3v18h18V3z"/><path d="M21 9H3M21 15H3M9 3v18M15 3v18"/></svg>
-                            {{ item.area|floatformat:0 }} م²
-                        </div>{% endif %}
+                        <div class="lcard-price">{{ item.formatted_price }}{% if item.price %}<span class="lcard-price-unit"> ت</span>{% endif %}</div>
                     </div>
                 </div>
             </a>
@@ -501,14 +495,20 @@
     overflow: hidden;
 }
 .lsec-featured {
-    background: #ffffff;
+    background: #f0f4ff;
 }
 .lsec-recent {
-    background: #ffffff;
-    padding-top: 24px;
+    background: #f0f4ff;
+    padding-top: 48px;
+    padding-bottom: 88px;
 }
 .lsec-bg-dots {
-    display: none;
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(37,99,235,0.08) 1.5px, transparent 1.5px);
+    background-size: 26px 26px;
+    pointer-events: none;
+    display: block;
 }
 
 /* Section header */
@@ -561,191 +561,189 @@
 }
 
 /* ===== LISTING CARD ===== */
+.lsec-recent .listings-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
 .lcard {
     background: #ffffff;
-    border: 1.5px solid #e8eef5;
-    border-radius: 18px;
+    border-radius: 16px;
     overflow: hidden;
     display: block;
     text-decoration: none;
-    transition: transform 0.28s cubic-bezier(0.34,1.4,0.64,1), border-color 0.25s, box-shadow 0.25s;
     position: relative;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.28s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.28s;
+    box-shadow: 0 2px 12px rgba(15,23,42,0.08), 0 1px 3px rgba(15,23,42,0.06);
+    border: 1.5px solid rgba(226,232,240,0.8);
+    cursor: pointer;
+    direction: rtl;
 }
 .lcard:hover {
-    transform: translateY(-8px);
-    border-color: #93c5fd;
-    box-shadow: 0 20px 50px rgba(37,99,235,0.13), 0 4px 12px rgba(0,0,0,0.06);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(15,23,42,0.14), 0 4px 12px rgba(37,99,235,0.08);
+    border-color: #bfdbfe;
 }
 
-/* Card image area */
-.lcard-img {
-    aspect-ratio: 16/9;
+/* Image container — fixed height */
+.lcard-img-wrap {
     position: relative;
+    width: 100%;
+    height: 180px;
     overflow: hidden;
+    background: #e2e8f0;
+    flex-shrink: 0;
 }
-.lcard-img img {
-    width: 100%; height: 100%;
+.lcard-img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     display: block;
     transition: transform 0.5s ease;
 }
-.lcard:hover .lcard-img img { transform: scale(1.06); }
+.lcard:hover .lcard-img { transform: scale(1.06); }
 
-/* Card image zoom on hover */
-.lcard-img img { transition: transform 0.5s ease; }
-.lcard:hover .lcard-img img { transform: scale(1.06); }
-
-/* Placeholder */
+/* Placeholder fills image area */
 .lcard-ph {
-    width: 100%; height: 100%;
-    position: relative;
+    position: absolute;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
 }
-.lcard-ph--land     { background: linear-gradient(145deg, #0c2461 0%, #1a52a8 50%, #0f3880 100%); }
-.lcard-ph--factory  { background: linear-gradient(145deg, #1a3a0c 0%, #2d6317 50%, #1e4510 100%); }
-.lcard-ph--machinery{ background: linear-gradient(145deg, #2d1b69 0%, #5b3db5 50%, #3a2280 100%); }
-.lcard-ph--import   { background: linear-gradient(145deg, #0a3d52 0%, #0e6b8a 50%, #0b4d6b 100%); }
-.lcard-ph--export   { background: linear-gradient(145deg, #4a0e6e 0%, #8b2fc9 50%, #5c1588 100%); }
-.lcard-ph--product  { background: linear-gradient(145deg, #6b2400 0%, #c44b0a 50%, #872f00 100%); }
+.lcard-ph--land     { background: linear-gradient(150deg, #081f5c 0%, #1048b8 55%, #0a2d73 100%); }
+.lcard-ph--factory  { background: linear-gradient(150deg, #0a2007 0%, #1a6e10 55%, #0d3d08 100%); }
+.lcard-ph--machinery{ background: linear-gradient(150deg, #160a45 0%, #4a25b8 55%, #22136e 100%); }
+.lcard-ph--import   { background: linear-gradient(150deg, #04202e 0%, #0a5f80 55%, #063a50 100%); }
+.lcard-ph--export   { background: linear-gradient(150deg, #200645 0%, #6e1db8 55%, #380d6e 100%); }
+.lcard-ph--product  { background: linear-gradient(150deg, #1a0d00 0%, #7a3500 55%, #2e1000 100%); }
 
-/* Subtle dot grid overlay */
 .lcard-ph-grid {
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(255,255,255,0.09) 1px, transparent 1px);
     background-size: 20px 20px;
 }
-
-/* Glow blob */
 .lcard-ph-glow {
     position: absolute;
-    width: 160px; height: 160px;
+    width: 180px; height: 180px;
     border-radius: 50%;
-    filter: blur(55px);
-    opacity: 0.5;
-    transition: opacity 0.3s, transform 0.4s;
+    filter: blur(56px);
+    opacity: 0.4;
+    top: -20px; right: 10px;
 }
-.lcard:hover .lcard-ph-glow { opacity: 0.75; transform: scale(1.15); }
 .lcard-ph--land     .lcard-ph-glow { background: #3b82f6; }
 .lcard-ph--factory  .lcard-ph-glow { background: #22c55e; }
-.lcard-ph--machinery.lcard-ph-glow { background: #8b5cf6; }
 .lcard-ph--machinery .lcard-ph-glow { background: #8b5cf6; }
 .lcard-ph--import   .lcard-ph-glow { background: #06b6d4; }
 .lcard-ph--export   .lcard-ph-glow { background: #a855f7; }
 .lcard-ph--product  .lcard-ph-glow { background: #f97316; }
 
-/* Icon box */
-.lcard-ph-icon {
+/* Icon inside placeholder */
+.lcard-icon-center {
     position: relative;
-    z-index: 2;
-    width: 80px; height: 80px;
-    border-radius: 24px;
+    z-index: 1;
+    color: rgba(255,255,255,0.75);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255,255,255,0.12);
-    border: 1.5px solid rgba(255,255,255,0.22);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
-    backdrop-filter: blur(8px);
-    transition: transform 0.3s cubic-bezier(0.34,1.4,0.64,1), background 0.3s;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+    transition: transform 0.3s ease;
 }
-.lcard:hover .lcard-ph-icon {
-    transform: scale(1.1) translateY(-2px);
-    background: rgba(255,255,255,0.18);
-}
-.lcard-ph-icon { color: rgba(255,255,255,0.92); }
-.lcard-ph-icon svg { stroke: currentColor; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3)); }
+.lcard:hover .lcard-icon-center { transform: scale(1.08); }
 
-/* Badges */
+/* Badges on top of image */
+.lcard-badges {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 2;
+}
 .lcard-status {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 5px 13px;
+    padding: 4px 11px;
     border-radius: 100px;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    line-height: 1.4;
 }
-.lcard-status--sale { background: rgba(219,234,254,0.92); color: #1d4ed8; }
-.lcard-status--rent { background: rgba(209,250,229,0.92); color: #065f46; }
-.lcard-status--buy  { background: rgba(237,233,254,0.92); color: #5b21b6; }
-
+.lcard-status--sale { background: rgba(219,234,254,0.95); color: #1d4ed8; }
+.lcard-status--rent { background: rgba(209,250,229,0.95); color: #065f46; }
+.lcard-status--buy  { background: rgba(237,233,254,0.95); color: #5b21b6; }
 .lcard-vip {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: rgba(254,243,199,0.92);
+    background: rgba(254,243,199,0.95);
     color: #92400e;
-    border: none;
-    padding: 5px 12px;
+    padding: 4px 10px;
     border-radius: 100px;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    line-height: 1.4;
 }
 
-/* Card body */
+/* Card body — white section below image */
 .lcard-body {
-    padding: 16px 18px 20px;
+    padding: 14px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 .lcard-cat {
     font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 1px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
     color: #2563eb;
-    text-transform: uppercase;
-    margin-bottom: 7px;
+    margin-bottom: 2px;
 }
 .lcard-title {
-    font-size: 14px;
+    font-size: 13.5px;
     font-weight: 700;
     color: #0f172a;
     line-height: 1.6;
-    margin-bottom: 10px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     min-height: 2.8em;
 }
+.lcard-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid #f1f5f9;
+    margin-top: 4px;
+    gap: 6px;
+}
 .lcard-loc {
     display: flex;
     align-items: center;
-    gap: 5px;
-    font-size: 12px;
+    gap: 4px;
+    font-size: 11px;
     color: #94a3b8;
-    margin-bottom: 13px;
-}
-.lcard-foot {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    padding-top: 12px;
-    border-top: 1px solid #f1f5f9;
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .lcard-price {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 800;
     color: #1d4ed8;
     line-height: 1;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 .lcard-price-unit {
     font-size: 10px;
-    color: #94a3b8;
-    margin-top: 3px;
-}
-.lcard-area {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 12px;
+    font-weight: 500;
     color: #94a3b8;
 }
 
