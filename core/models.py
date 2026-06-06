@@ -9,6 +9,8 @@ CATEGORY_CHOICES = [
     ('import', 'واردات'),
     ('export', 'صادرات'),
     ('product', 'محصولات'),
+    ('electricity', 'تامین برق'),
+    ('water', 'تامین آب'),
 ]
 
 STATUS_CHOICES = [

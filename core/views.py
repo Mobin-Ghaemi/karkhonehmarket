@@ -12,6 +12,8 @@ def home(request):
         'import': Listing.objects.filter(category='import').count(),
         'export': Listing.objects.filter(category='export').count(),
         'product': Listing.objects.filter(category='product').count(),
+        'electricity': Listing.objects.filter(category='electricity').count(),
+        'water': Listing.objects.filter(category='water').count(),
     }
     stats['all'] = sum(stats.values())
     stats['sale'] = Listing.objects.filter(status='sale').count()
