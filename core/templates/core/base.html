@@ -1,0 +1,1709 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}کارخونه مارکت{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Cairo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue-900: #0B1F3A;
+            --blue-800: #103460;
+            --blue-700: #1A4F8A;
+            --blue-600: #1E6BB8;
+            --blue-500: #2081E2;
+            --blue-400: #4A9CF5;
+            --blue-100: #DBEAFE;
+            --blue-50:  #EFF6FF;
+            --white: #FFFFFF;
+            --gray-50: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-400: #94A3B8;
+            --gray-500: #64748B;
+            --gray-700: #334155;
+            --gray-900: #0F172A;
+            --text: #1E293B;
+            --radius: 14px;
+            --radius-sm: 8px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow: 0 4px 16px rgba(0,0,0,0.07);
+            --shadow-md: 0 8px 32px rgba(0,0,0,0.10);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: var(--gray-50);
+            color: var(--text);
+            direction: rtl;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== Font & Direction overrides per language ===== */
+        html[lang="en"] body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            direction: ltr;
+        }
+        html[lang="ar"] body {
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+        }
+
+        html[lang="en"] input,
+        html[lang="en"] select,
+        html[lang="en"] button,
+        html[lang="en"] .btn,
+        html[lang="en"] .chip,
+        html[lang="en"] .search-box input,
+        html[lang="en"] .search-box select,
+        html[lang="en"] .search-box .search-btn {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        html[lang="ar"] input,
+        html[lang="ar"] select,
+        html[lang="ar"] button,
+        html[lang="ar"] .btn,
+        html[lang="ar"] .chip,
+        html[lang="ar"] .search-box input,
+        html[lang="ar"] .search-box select,
+        html[lang="ar"] .search-box .search-btn {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        /* ===== Content-area LTR fixes (stats, etc.) ===== */
+        html[dir="ltr"] .stat-item {
+            border-left: none;
+            border-right: 1px solid var(--gray-200);
+        }
+
+        html[dir="ltr"] .stat-item:last-child {
+            border-right: none;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* ========== TOPBAR ========== */
+        .topbar {
+            background: var(--blue-900);
+            padding: 7px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .topbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            direction: ltr;
+        }
+
+        .topbar-info {
+            display: flex;
+            gap: 20px;
+            color: rgba(255,255,255,0.45);
+            font-size: 0.73rem;
+            align-items: center;
+        }
+
+        .topbar-info span { display: flex; align-items: center; gap: 5px; }
+
+        /* ========== LANGUAGE SWITCHER ========== */
+        .lang-switcher {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.55);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.71rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: inherit;
+            letter-spacing: 0.3px;
+        }
+
+        .lang-btn:hover {
+            color: white;
+            border-color: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .lang-btn.active {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        /* ========== NAVBAR ========== */
+        .navbar {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .navbar-inner {
+            display: flex;
+            align-items: center;
+            height: 68px;
+            gap: 0;
+            direction: ltr;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-left: 28px;
+            margin-left: 4px;
+            flex-shrink: 0;
+        }
+
+        .logo-mark {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(32,129,226,0.3);
+        }
+
+        .logo-text { line-height: 1.2; }
+
+        .logo-text strong {
+            display: block;
+            font-size: 0.97rem;
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
+        .logo-text span {
+            font-size: 0.67rem;
+            color: var(--gray-400);
+            font-weight: 400;
+        }
+
+        /* NAV DIVIDER */
+        .nav-divider {
+            width: 1px;
+            height: 28px;
+            background: var(--gray-200);
+            margin: 0 8px 0 4px;
+            flex-shrink: 0;
+        }
+
+        /* NAV TABS */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            height: 68px;
+            flex: 1;
+            padding: 0 4px;
+        }
+
+        .nav-menu li { height: 100%; }
+
+        .nav-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            height: 100%;
+            padding: 0 11px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--gray-500);
+            border-bottom: 2px solid transparent;
+            transition: all 0.15s;
+            white-space: nowrap;
+        }
+
+        .nav-menu li a .nav-icon { font-size: 0.85rem; }
+
+        .nav-menu li a:hover { color: var(--blue-600); background: var(--blue-50); }
+
+        .nav-menu li a.active {
+            color: var(--blue-600);
+            border-bottom-color: var(--blue-500);
+            font-weight: 600;
+        }
+
+        .nav-end {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-left: 8px;
+            flex-shrink: 0;
+        }
+
+        /* User button in nav */
+        .nav-user-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 14px 7px 10px;
+            border-radius: 100px;
+            border: 1.5px solid var(--gray-200);
+            background: white;
+            color: var(--gray-700);
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.18s;
+            text-decoration: none;
+        }
+
+        .nav-user-btn:hover {
+            border-color: var(--blue-300, #93C5FD);
+            background: var(--blue-50);
+            color: var(--blue-700);
+        }
+
+        .nav-avatar {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.68rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .nav-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 20px;
+            border-radius: var(--radius-sm);
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.83rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
+            color: white;
+            box-shadow: 0 2px 10px rgba(32,129,226,0.35);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+            box-shadow: 0 4px 16px rgba(32,129,226,0.45);
+            transform: translateY(-1px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--gray-600);
+            border: 1.5px solid var(--gray-200);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--blue-400);
+            color: var(--blue-600);
+            background: var(--blue-50);
+        }
+
+        /* ========== CONTAINER ========== */
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            background: linear-gradient(160deg, var(--blue-900) 0%, var(--blue-700) 60%, var(--blue-600) 100%);
+            padding: 72px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+        }
+
+        .hero-bg-circle-1 { width: 480px; height: 480px; top: -160px; left: -80px; }
+        .hero-bg-circle-2 { width: 320px; height: 320px; bottom: -120px; right: 10%; }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.18);
+            color: rgba(255,255,255,0.85);
+            padding: 5px 16px;
+            border-radius: 100px;
+            font-size: 0.78rem;
+            margin-bottom: 24px;
+            backdrop-filter: blur(4px);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: white;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--blue-400);
+        }
+
+        .hero-sub {
+            color: rgba(255,255,255,0.6);
+            font-size: 1rem;
+            margin-bottom: 40px;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        /* ========== SEARCH ========== */
+        .search-wrap {
+            max-width: 660px;
+            margin: 0 auto;
+        }
+
+        .search-box {
+            background: white;
+            border-radius: 12px;
+            padding: 6px 6px 6px 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text);
+            padding: 10px 12px;
+            background: transparent;
+            min-width: 0;
+        }
+
+        .search-box input::placeholder { color: var(--gray-400); }
+
+        .search-divider {
+            width: 1px;
+            height: 24px;
+            background: var(--gray-200);
+            flex-shrink: 0;
+        }
+
+        .search-box select {
+            border: none;
+            outline: none;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.83rem;
+            color: var(--gray-500);
+            background: transparent;
+            padding: 10px 8px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .search-box .search-btn {
+            background: var(--blue-500);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.15s;
+            flex-shrink: 0;
+        }
+
+        .search-box .search-btn:hover { background: var(--blue-600); }
+
+        /* ========== STATS ========== */
+        .stats-strip {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .stats-strip .container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 40px;
+            border-left: 1px solid var(--gray-200);
+            gap: 2px;
+        }
+
+        .stat-item:last-child { border-left: none; }
+
+        .stat-num {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--blue-600);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.74rem;
+            color: var(--gray-400);
+            margin-top: 3px;
+        }
+
+        /* ========== SECTION ========== */
+        .section { padding: 56px 0; }
+        .section-alt { background: white; }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title-bar {
+            width: 3px;
+            height: 22px;
+            background: var(--blue-500);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .see-all {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--blue-500);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: gap 0.15s;
+        }
+
+        .see-all:hover { gap: 8px; }
+
+        /* ========== CATEGORY CARDS ========== */
+        .cat-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 14px;
+        }
+
+        .cat-card-all {
+            border-color: var(--blue-200, #BFDBFE);
+            background: linear-gradient(135deg, var(--blue-50) 0%, #EFF6FF 100%);
+        }
+
+        .cat-card-all:hover {
+            border-color: var(--blue-500);
+            box-shadow: 0 4px 20px rgba(32,129,226,0.18);
+        }
+
+        .cat-card-all .cat-name { color: var(--blue-700); }
+        .cat-card-all .cat-emoji { opacity: 1; }
+
+        .cat-card-sale {
+            border-color: #FCA5A5;
+            background: linear-gradient(135deg, #FEF2F2 0%, #FFF5F5 100%);
+        }
+
+        .cat-card-sale:hover {
+            border-color: #EF4444;
+            box-shadow: 0 4px 20px rgba(239,68,68,0.18);
+        }
+
+        .cat-card-sale .cat-name { color: #B91C1C; }
+        .cat-card-sale .cat-emoji { opacity: 1; }
+
+        .cat-card {
+            background: white;
+            border: 1.5px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 28px 16px 22px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: block;
+        }
+
+        .cat-card:hover {
+            border-color: var(--blue-400);
+            box-shadow: 0 4px 20px rgba(32,129,226,0.12);
+            transform: translateY(-3px);
+        }
+
+        .cat-emoji {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            display: block;
+            line-height: 1;
+        }
+
+        .cat-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 5px;
+        }
+
+        .cat-count {
+            font-size: 0.72rem;
+            color: var(--gray-400);
+        }
+
+        /* ========== LISTING CARDS ========== */
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            align-items: start;
+        }
+
+        .listing-card {
+            background: white;
+            border: 1.5px solid var(--gray-200);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: all 0.22s;
+            display: block;
+            color: inherit;
+        }
+
+        .listing-card:hover {
+            border-color: #93C5FD;
+            box-shadow: 0 8px 32px rgba(32,129,226,0.13);
+            transform: translateY(-4px);
+        }
+
+        .card-img {
+            aspect-ratio: 16/9;
+            background: var(--blue-50);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-img-placeholder {
+            width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            opacity: 0.25;
+            color: var(--blue-600);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 11px;
+            border-radius: 100px;
+            font-size: 0.69rem;
+            font-weight: 700;
+            backdrop-filter: blur(4px);
+        }
+
+        .badge-sale { background: rgba(219,234,254,0.92); color: #1D4ED8; }
+        .badge-rent { background: rgba(209,250,229,0.92); color: #065F46; }
+        .badge-buy  { background: rgba(237,233,254,0.92); color: #5B21B6; }
+
+        .badge-vip {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--blue-600);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 0.67rem;
+            font-weight: 700;
+        }
+
+        .card-body { padding: 14px 16px 16px; }
+
+        .card-cat {
+            font-size: 0.69rem;
+            font-weight: 600;
+            color: var(--blue-500);
+            letter-spacing: 0.3px;
+            margin-bottom: 5px;
+        }
+
+        .card-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            line-height: 1.5;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 2.6em;
+        }
+
+        .card-loc {
+            font-size: 0.73rem;
+            color: var(--gray-400);
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            margin-bottom: 10px;
+        }
+
+        .card-foot {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding-top: 10px;
+            border-top: 1px solid var(--gray-100);
+        }
+
+        .card-price {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--blue-700);
+            line-height: 1;
+        }
+
+        .card-price-unit {
+            font-size: 0.65rem;
+            color: var(--gray-400);
+            margin-top: 2px;
+            font-weight: 400;
+        }
+
+        .card-area {
+            font-size: 0.71rem;
+            color: var(--gray-400);
+        }
+
+        /* ========== PAGE HEADER ========== */
+        .page-header {
+            background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 100%);
+            padding: 40px 0 36px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .page-header .container { position: relative; z-index: 1; }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.74rem;
+            color: rgba(255,255,255,0.45);
+            margin-bottom: 14px;
+        }
+
+        .breadcrumb a { color: rgba(255,255,255,0.45); transition: color 0.15s; }
+        .breadcrumb a:hover { color: rgba(255,255,255,0.9); }
+        .breadcrumb span { color: rgba(255,255,255,0.25); }
+
+        .page-header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .page-header p { font-size: 0.83rem; color: rgba(255,255,255,0.55); }
+
+        /* ========== FILTERS ========== */
+        .filter-bar {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            padding: 12px 0;
+            position: sticky;
+            top: 64px;
+            z-index: 100;
+        }
+
+        .filter-inner {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 7px 14px;
+            border-radius: 100px;
+            border: 1.5px solid var(--gray-200);
+            background: white;
+            color: var(--gray-500);
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.79rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.15s;
+        }
+
+        .chip:hover { border-color: var(--blue-400); color: var(--blue-600); }
+
+        .chip.active {
+            border-color: var(--blue-500);
+            background: var(--blue-50);
+            color: var(--blue-600);
+            font-weight: 600;
+        }
+
+        .filter-sep {
+            width: 1px;
+            height: 20px;
+            background: var(--gray-200);
+        }
+
+        /* ========== DETAIL PAGE ========== */
+        .det-layout {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 28px;
+            padding: 36px 0 72px;
+            align-items: start;
+        }
+
+        /* Left column */
+        .det-main {}
+
+        .det-img {
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            background: var(--blue-50);
+            margin-bottom: 0;
+            position: relative;
+        }
+
+        .det-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .det-img-placeholder {
+            width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            opacity: 0.25;
+        }
+
+        .det-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 18px 0 14px;
+        }
+
+        .det-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 14px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 1.5px solid;
+        }
+
+        .det-badge-blue { background: var(--blue-50); color: var(--blue-600); border-color: var(--blue-100); }
+        .det-badge-gray { background: var(--gray-100); color: var(--gray-600); border-color: var(--gray-200); }
+        .det-badge-gold { background: #FFFBEB; color: #92400E; border-color: #FDE68A; }
+
+        .det-title {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--gray-900);
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .det-location {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.83rem;
+            color: var(--gray-500);
+            margin-bottom: 24px;
+        }
+
+        .det-section {
+            background: white;
+            border: 1.5px solid var(--gray-200);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .det-section-head {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--gray-100);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--gray-700);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .det-section-body {
+            padding: 20px;
+            font-size: 0.88rem;
+            line-height: 2;
+            color: var(--gray-500);
+            white-space: pre-line;
+        }
+
+        .det-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .det-spec-item {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--gray-100);
+            border-left: 1px solid var(--gray-100);
+        }
+
+        .det-spec-item:nth-child(odd) { border-left: none; }
+        .det-spec-item:nth-last-child(-n+2) { border-bottom: none; }
+
+        .det-spec-label {
+            font-size: 0.72rem;
+            color: var(--gray-400);
+            margin-bottom: 3px;
+        }
+
+        .det-spec-val {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        /* Right column — contact card */
+        .det-sidebar { position: sticky; top: 88px; }
+
+        .contact-card {
+            background: white;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        }
+
+        .contact-card-top {
+            background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 100%);
+            padding: 24px;
+        }
+
+        .contact-card-label {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-price {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: white;
+            line-height: 1.1;
+        }
+
+        .contact-price-sub {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 4px;
+        }
+
+        .contact-card-body { padding: 20px; }
+
+        .btn-call {
+            width: 100%;
+            background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            transition: all 0.15s;
+            text-decoration: none;
+            box-shadow: 0 4px 16px rgba(32,129,226,0.35);
+        }
+
+        .btn-call:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(32,129,226,0.45); }
+
+        .btn-wa {
+            width: 100%;
+            background: #DCFCE7;
+            color: #15803D;
+            border: 1.5px solid #BBF7D0;
+            padding: 12px;
+            border-radius: 10px;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.15s;
+            text-decoration: none;
+        }
+
+        .btn-wa:hover { background: #22C55E; color: white; border-color: #22C55E; }
+
+        .contact-divider {
+            height: 1px;
+            background: var(--gray-100);
+            margin: 18px 0;
+        }
+
+        .info-list {}
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-100);
+            font-size: 0.82rem;
+        }
+
+        .info-row:last-child { border-bottom: none; }
+        .info-key { color: var(--gray-400); display: flex; align-items: center; gap: 5px; }
+        .info-val { font-weight: 600; color: var(--gray-800); }
+
+        .contact-safe {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            background: var(--gray-50);
+            border-radius: 8px;
+            margin-top: 14px;
+            font-size: 0.75rem;
+            color: var(--gray-400);
+        }
+
+        /* ========== WHY US ========== */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .why-card {
+            background: white;
+            border: 1.5px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 28px 20px;
+            text-align: center;
+            transition: border-color 0.2s;
+        }
+
+        .why-card:hover { border-color: var(--blue-300, #93C5FD); }
+
+        .why-icon {
+            width: 52px;
+            height: 52px;
+            background: var(--blue-50);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 14px;
+        }
+
+        .why-card h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 6px;
+        }
+
+        .why-card p {
+            font-size: 0.78rem;
+            color: var(--gray-400);
+            line-height: 1.7;
+        }
+
+        /* ========== EMPTY STATE ========== */
+        .empty {
+            text-align: center;
+            padding: 72px 24px;
+            color: var(--gray-400);
+        }
+
+        .empty-icon { font-size: 3.5rem; margin-bottom: 14px; opacity: 0.4; }
+        .empty h3 { font-size: 1.1rem; color: var(--gray-700); margin-bottom: 6px; }
+        .empty p { font-size: 0.83rem; }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: var(--gray-900);
+            color: rgba(255,255,255,0.55);
+            padding: 56px 0 0;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .footer-brand p {
+            font-size: 0.82rem;
+            line-height: 1.8;
+            margin-top: 14px;
+        }
+
+        .footer-col h4 {
+            color: rgba(255,255,255,0.85);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .footer-col ul { list-style: none; }
+
+        .footer-col ul li { margin-bottom: 8px; }
+
+        .footer-col ul li a {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            transition: color 0.15s;
+        }
+
+        .footer-col ul li a:hover { color: rgba(255,255,255,0.85); }
+
+        .footer-bottom {
+            padding: 18px 0;
+            text-align: center;
+            font-size: 0.74rem;
+            color: rgba(255,255,255,0.25);
+        }
+
+        /* grid auto-fill for small counts */
+        .listings-grid-auto {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+            align-items: start;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1280px) {
+            .cat-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        @media (max-width: 1024px) {
+            .cat-grid { grid-template-columns: repeat(4, 1fr); }
+            .listings-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .why-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .hero h1 { font-size: 1.9rem; }
+            .cat-grid { grid-template-columns: repeat(2, 1fr); }
+            .listings-grid { grid-template-columns: 1fr; }
+            .listings-grid-auto { grid-template-columns: 1fr; }
+            .detail-wrap { grid-template-columns: 1fr; }
+            .stat-item { padding: 16px 20px; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .why-grid { grid-template-columns: 1fr 1fr; }
+            .topbar-info { display: none; }
+        }
+    </style>
+{% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<div class="topbar">
+    <div class="container">
+        <div class="topbar-info">
+            <span>📞 ۰۲۱-۱۲۳۴۵۶۷۸</span>
+            <span>📧 info@karkhonehmarket.ir</span>
+        </div>
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="fa">🇮🇷 FA</button>
+            <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
+            <button class="lang-btn" data-lang="ar">🇸🇦 AR</button>
+        </div>
+        <div style="display:flex;gap:14px;align-items:center;">
+            {% if user.is_authenticated %}
+                <span style="color:rgba(255,255,255,0.45);font-size:0.73rem;">خوش آمدید، <strong style="color:rgba(255,255,255,0.75);">{{ user.first_name|default:user.username }}</strong></span>
+                <a href="{% url 'logout' %}" style="color:rgba(255,255,255,0.45);font-size:0.73rem;transition:color 0.15s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">خروج</a>
+            {% else %}
+                <a href="{% url 'login' %}" style="color:rgba(255,255,255,0.55);font-size:0.73rem;transition:color 0.15s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">ورود</a>
+                <a href="{% url 'register' %}" style="color:rgba(255,255,255,0.55);font-size:0.73rem;transition:color 0.15s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">ثبت‌نام</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<nav class="navbar">
+    <div class="container">
+        <div class="navbar-inner">
+            <a href="{% url 'home' %}" class="logo">
+                <div class="logo-mark">🏭</div>
+                <div class="logo-text">
+                    <strong>کارخونه مارکت</strong>
+                    <span>مارکت صنعتی ایران</span>
+                </div>
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <ul class="nav-menu">
+                <li><a href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}><span class="nav-icon">🏠</span> خانه</a></li>
+                <li><a href="{% url 'category' 'land' %}" {% if request.resolver_match.kwargs.category == 'land' %}class="active"{% endif %}><span class="nav-icon">🌍</span> زمین صنعتی</a></li>
+                <li><a href="{% url 'category' 'factory' %}" {% if request.resolver_match.kwargs.category == 'factory' %}class="active"{% endif %}><span class="nav-icon">🏭</span> کارخانه</a></li>
+                <li><a href="{% url 'category' 'machinery' %}" {% if request.resolver_match.kwargs.category == 'machinery' %}class="active"{% endif %}><span class="nav-icon">⚙️</span> ماشین‌آلات</a></li>
+                <li><a href="{% url 'category' 'import' %}" {% if request.resolver_match.kwargs.category == 'import' %}class="active"{% endif %}><span class="nav-icon">📦</span> واردات</a></li>
+                <li><a href="{% url 'category' 'export' %}" {% if request.resolver_match.kwargs.category == 'export' %}class="active"{% endif %}><span class="nav-icon">🚢</span> صادرات</a></li>
+                <li><a href="{% url 'products' %}" {% if request.resolver_match.url_name == 'products' %}class="active"{% endif %}><span class="nav-icon">🏪</span> محصولات</a></li>
+                <li><a href="{% url 'listings' %}" {% if request.resolver_match.url_name == 'listings' %}class="active"{% endif %}><span class="nav-icon">📋</span> همه آگهی‌ها</a></li>
+            </ul>
+
+            <div class="nav-end">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'dashboard' %}" class="btn btn-ghost">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="4.5" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M2 12c0-2.21 2.239-4 5-4s5 1.79 5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        حساب کاربری
+                    </a>
+                    <a href="{% url 'post_listing' %}" class="btn btn-primary">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                        ثبت آگهی
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-ghost">ورود</a>
+                    <a href="{% url 'register' %}" class="btn btn-primary">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                        ثبت‌نام رایگان
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+{% block content %}{% endblock %}
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div class="logo-mark">🏭</div>
+                    <div class="logo-text">
+                        <strong data-i18n="logo.name" style="color:rgba(255,255,255,0.9);font-size:1rem;">کارخونه مارکت</strong>
+                        <span data-i18n="logo.subtitle">مارکت صنعتی ایران</span>
+                    </div>
+                </div>
+                <p data-i18n="footer.brand.desc">بزرگترین پلتفرم خرید، فروش و اجاره زمین صنعتی، کارخانه، ماشین‌آلات، واردات و صادرات در ایران.</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.col.categories">دسته‌بندی‌ها</h4>
+                <ul>
+                    <li><a href="{% url 'category' 'land' %}" data-i18n="footer.cat.land">زمین صنعتی</a></li>
+                    <li><a href="{% url 'category' 'factory' %}" data-i18n="footer.cat.factory">کارخانه</a></li>
+                    <li><a href="{% url 'category' 'machinery' %}" data-i18n="footer.cat.machinery">ماشین‌آلات</a></li>
+                    <li><a href="{% url 'category' 'import' %}" data-i18n="footer.cat.import">واردات</a></li>
+                    <li><a href="{% url 'category' 'export' %}" data-i18n="footer.cat.export">صادرات</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.col.services">خدمات</h4>
+                <ul>
+                    <li><a href="#" data-i18n="footer.svc.free">ثبت آگهی رایگان</a></li>
+                    <li><a href="#" data-i18n="footer.svc.vip">آگهی ویژه</a></li>
+                    <li><a href="#" data-i18n="footer.svc.consult">مشاوره سرمایه‌گذاری</a></li>
+                    <li><a href="#" data-i18n="footer.svc.eval">ارزیابی ملک</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.col.links">لینک‌های مفید</h4>
+                <ul>
+                    <li><a href="#" data-i18n="footer.link.about">درباره ما</a></li>
+                    <li><a href="#" data-i18n="footer.link.contact">تماس با ما</a></li>
+                    <li><a href="#" data-i18n="footer.link.terms">قوانین و مقررات</a></li>
+                    <li><a href="{% url 'listings' %}" data-i18n="footer.link.all">همه آگهی‌ها</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom" data-i18n="footer.copy">© ۱۴۰۳ کارخونه مارکت — تمامی حقوق محفوظ است.</div>
+    </div>
+</footer>
+
+{% block extra_js %}{% endblock %}
+<script>
+(function () {
+    var T = {
+        fa: {
+            'topbar.phone': '📞 ۰۲۱-۱۲۳۴۵۶۷۸',
+            'topbar.email': '📧 info@karkhonehmarket.ir',
+            'topbar.login': 'ورود',
+            'topbar.register': 'ثبت‌نام',
+            'logo.name': 'کارخونه مارکت',
+            'logo.subtitle': 'مارکت صنعتی ایران',
+            'nav.home': 'خانه',
+            'nav.land': 'زمین صنعتی',
+            'nav.factory': 'کارخانه',
+            'nav.machinery': 'ماشین‌آلات',
+            'nav.import': 'واردات',
+            'nav.export': 'صادرات',
+            'nav.products': 'محصولات',
+            'nav.all': 'همه آگهی‌ها',
+            'nav.login': 'ورود',
+            'nav.post': '+ ثبت آگهی',
+            'footer.brand.desc': 'بزرگترین پلتفرم خرید، فروش و اجاره زمین صنعتی، کارخانه، ماشین‌آلات، واردات و صادرات در ایران.',
+            'footer.col.categories': 'دسته‌بندی‌ها',
+            'footer.col.services': 'خدمات',
+            'footer.col.links': 'لینک‌های مفید',
+            'footer.cat.land': 'زمین صنعتی',
+            'footer.cat.factory': 'کارخانه',
+            'footer.cat.machinery': 'ماشین‌آلات',
+            'footer.cat.import': 'واردات',
+            'footer.cat.export': 'صادرات',
+            'footer.svc.free': 'ثبت آگهی رایگان',
+            'footer.svc.vip': 'آگهی ویژه',
+            'footer.svc.consult': 'مشاوره سرمایه‌گذاری',
+            'footer.svc.eval': 'ارزیابی ملک',
+            'footer.link.about': 'درباره ما',
+            'footer.link.contact': 'تماس با ما',
+            'footer.link.terms': 'قوانین و مقررات',
+            'footer.link.all': 'همه آگهی‌ها',
+            'footer.copy': '© ۱۴۰۳ کارخونه مارکت — تمامی حقوق محفوظ است.',
+            'home.eyebrow': '🔥 بیش از ۱۰,۰۰۰ آگهی فعال در سراسر ایران',
+            'home.h1a': 'بزرگترین پلتفرم',
+            'home.h1b': 'مارکت صنعتی ایران',
+            'home.sub': 'خرید، فروش و اجاره زمین صنعتی، کارخانه، ماشین‌آلات، واردات و صادرات — همه در یک جا',
+            'home.search.ph': 'جستجو در آگهی‌ها... (کارخانه، زمین، دستگاه)',
+            'home.search.all': 'همه دسته‌ها',
+            'home.search.land': 'زمین صنعتی',
+            'home.search.factory': 'کارخانه',
+            'home.search.machinery': 'ماشین‌آلات',
+            'home.search.import': 'واردات',
+            'home.search.export': 'صادرات',
+            'home.search.btn': '🔍 جستجو',
+            'stat.land': '🌍 زمین صنعتی',
+            'stat.factory': '🏭 کارخانه',
+            'stat.machinery': '⚙️ ماشین‌آلات',
+            'stat.import': '📦 واردکننده',
+            'stat.export': '🚢 صادرکننده',
+            'home.sec.cats': 'دسته‌بندی خدمات',
+            'home.see_all': 'مشاهده همه ←',
+            'cat.land': 'زمین صنعتی',
+            'cat.factory': 'کارخانه',
+            'cat.machinery': 'ماشین‌آلات',
+            'cat.import': 'واردات',
+            'cat.export': 'صادرات',
+            'cat.unit': 'آگهی',
+            'home.sec.featured': 'آگهی‌های ویژه',
+            'home.sec.sale': 'فروش محصولات',
+            'home.sale.empty': 'آگهی فروش فعالی وجود ندارد',
+            'badge.vip': 'ویژه',
+            'price.unit': 'تومان',
+            'status.sale': 'فروش',
+            'status.rent': 'اجاره',
+            'status.buy': 'خرید',
+            'home.sec.recent': 'جدیدترین آگهی‌ها',
+            'home.empty.title': 'هنوز آگهی‌ای ثبت نشده',
+            'home.empty.desc': 'اولین آگهی را از پنل ادمین ثبت کنید.',
+            'home.sec.why': 'چرا کارخونه مارکت؟',
+            'why.1.title': 'معاملات مطمئن',
+            'why.1.desc': 'تمامی آگهی‌ها تأییدشده و معتبر هستند.',
+            'why.2.title': 'ثبت سریع',
+            'why.2.desc': 'آگهی خود را در کمتر از ۵ دقیقه ثبت کنید.',
+            'why.3.title': 'پوشش سراسری',
+            'why.3.desc': 'آگهی‌ها از سراسر ایران در یک پلتفرم.',
+            'why.4.title': 'پشتیبانی ۲۴/۷',
+            'why.4.desc': 'تیم پشتیبانی آماده پاسخگویی است.',
+            'bc.home': 'خانه',
+            'bc.all': 'همه آگهی‌ها',
+            'lst.h1': '📋 همه آگهی‌ها',
+            'lst.count': 'آگهی یافت شد',
+            'lst.all': 'همه',
+            'lst.sale': 'فروش',
+            'lst.rent': 'اجاره',
+            'lst.buy': 'خرید',
+            'lst.search.ph': 'جستجو...',
+            'lst.search.btn': 'جستجو',
+            'lst.empty.title': 'آگهی‌ای یافت نشد',
+            'lst.empty.desc': 'فیلترها را تغییر دهید یا جستجوی دیگری انجام دهید.',
+            'cat.count_suffix': 'آگهی فعال در این دسته',
+            'cat.empty.title': 'هنوز آگهی‌ای در این دسته ثبت نشده',
+            'cat.empty.desc': 'اولین نفری باشید که در این دسته آگهی ثبت می‌کند.',
+            'det.posted': 'ثبت شده در',
+            'det.desc.title': 'توضیحات آگهی',
+            'det.call': '📞 تماس با آگهی‌دهنده',
+            'det.wa': '💬 واتساپ',
+            'det.negotiable': 'توافقی',
+            'det.info.cat': 'دسته‌بندی',
+            'det.info.status': 'نوع آگهی',
+            'det.info.area': 'مساحت',
+            'det.info.loc': 'موقعیت',
+            'det.info.phone': 'تلفن',
+            'det.info.date': 'تاریخ ثبت',
+            'det.area.unit': 'متر مربع',
+            'det.related': 'آگهی‌های مشابه',
+            'det.see_all': 'مشاهده همه ←'
+        },
+        en: {
+            'topbar.phone': '📞 021-12345678',
+            'topbar.email': '📧 info@karkhonehmarket.ir',
+            'topbar.login': 'Login',
+            'topbar.register': 'Register',
+            'logo.name': 'Karkhoneh Market',
+            'logo.subtitle': 'Iran Industrial Market',
+            'nav.home': 'Home',
+            'nav.land': 'Industrial Land',
+            'nav.factory': 'Factory',
+            'nav.machinery': 'Machinery',
+            'nav.import': 'Import',
+            'nav.export': 'Export',
+            'nav.products': 'Products',
+            'nav.all': 'All Listings',
+            'nav.login': 'Login',
+            'nav.post': '+ Post Ad',
+            'footer.brand.desc': 'The largest platform for buying, selling and renting industrial land, factories, machinery, imports and exports in Iran.',
+            'footer.col.categories': 'Categories',
+            'footer.col.services': 'Services',
+            'footer.col.links': 'Useful Links',
+            'footer.cat.land': 'Industrial Land',
+            'footer.cat.factory': 'Factory',
+            'footer.cat.machinery': 'Machinery',
+            'footer.cat.import': 'Import',
+            'footer.cat.export': 'Export',
+            'footer.svc.free': 'Free Listing',
+            'footer.svc.vip': 'VIP Listing',
+            'footer.svc.consult': 'Investment Consulting',
+            'footer.svc.eval': 'Property Valuation',
+            'footer.link.about': 'About Us',
+            'footer.link.contact': 'Contact Us',
+            'footer.link.terms': 'Terms & Conditions',
+            'footer.link.all': 'All Listings',
+            'footer.copy': '© 2024 Karkhoneh Market — All rights reserved.',
+            'home.eyebrow': '🔥 Over 10,000 Active Listings Across Iran',
+            'home.h1a': 'The Largest Platform for',
+            'home.h1b': "Iran's Industrial Market",
+            'home.sub': 'Buy, sell and rent industrial land, factories, machinery, import and export — all in one place',
+            'home.search.ph': 'Search listings... (factory, land, machine)',
+            'home.search.all': 'All Categories',
+            'home.search.land': 'Industrial Land',
+            'home.search.factory': 'Factory',
+            'home.search.machinery': 'Machinery',
+            'home.search.import': 'Import',
+            'home.search.export': 'Export',
+            'home.search.btn': '🔍 Search',
+            'stat.land': '🌍 Industrial Land',
+            'stat.factory': '🏭 Factory',
+            'stat.machinery': '⚙️ Machinery',
+            'stat.import': '📦 Importer',
+            'stat.export': '🚢 Exporter',
+            'home.sec.cats': 'Service Categories',
+            'home.see_all': 'See All →',
+            'cat.land': 'Industrial Land',
+            'cat.factory': 'Factory',
+            'cat.machinery': 'Machinery',
+            'cat.import': 'Import',
+            'cat.export': 'Export',
+            'cat.unit': 'listings',
+            'home.sec.featured': 'Featured Listings',
+            'home.sec.sale': 'Product Sales',
+            'home.sale.empty': 'No active sale listings available',
+            'badge.vip': 'Featured',
+            'price.unit': 'Toman',
+            'status.sale': 'For Sale',
+            'status.rent': 'For Rent',
+            'status.buy': 'Wanted',
+            'home.sec.recent': 'Latest Listings',
+            'home.empty.title': 'No Listings Yet',
+            'home.empty.desc': 'Add the first listing from the admin panel.',
+            'home.sec.why': 'Why Karkhoneh Market?',
+            'why.1.title': 'Secure Transactions',
+            'why.1.desc': 'All listings are verified and authentic.',
+            'why.2.title': 'Quick Registration',
+            'why.2.desc': 'Post your ad in less than 5 minutes.',
+            'why.3.title': 'Nationwide Coverage',
+            'why.3.desc': 'Listings from across Iran on one platform.',
+            'why.4.title': '24/7 Support',
+            'why.4.desc': 'Our support team is ready to assist you.',
+            'bc.home': 'Home',
+            'bc.all': 'All Listings',
+            'lst.h1': '📋 All Listings',
+            'lst.count': 'listings found',
+            'lst.all': 'All',
+            'lst.sale': 'Sale',
+            'lst.rent': 'Rent',
+            'lst.buy': 'Buy',
+            'lst.search.ph': 'Search...',
+            'lst.search.btn': 'Search',
+            'lst.empty.title': 'No Listings Found',
+            'lst.empty.desc': 'Change the filters or try a different search.',
+            'cat.count_suffix': 'active listings in this category',
+            'cat.empty.title': 'No listings in this category yet',
+            'cat.empty.desc': 'Be the first to post in this category.',
+            'det.posted': 'Posted on',
+            'det.desc.title': 'Listing Description',
+            'det.call': '📞 Contact Seller',
+            'det.wa': '💬 WhatsApp',
+            'det.negotiable': 'Negotiable',
+            'det.info.cat': 'Category',
+            'det.info.status': 'Type',
+            'det.info.area': 'Area',
+            'det.info.loc': 'Location',
+            'det.info.phone': 'Phone',
+            'det.info.date': 'Posted Date',
+            'det.area.unit': 'sq. m.',
+            'det.related': 'Related Listings',
+            'det.see_all': 'See All →'
+        },
+        ar: {
+            'topbar.phone': '📞 021-12345678',
+            'topbar.email': '📧 info@karkhonehmarket.ir',
+            'topbar.login': 'تسجيل الدخول',
+            'topbar.register': 'إنشاء حساب',
+            'logo.name': 'كارخانة ماركت',
+            'logo.subtitle': 'السوق الصناعية الإيرانية',
+            'nav.home': 'الرئيسية',
+            'nav.land': 'أراضي صناعية',
+            'nav.factory': 'مصانع',
+            'nav.machinery': 'آلات ومعدات',
+            'nav.import': 'استيراد',
+            'nav.export': 'تصدير',
+            'nav.products': 'المنتجات',
+            'nav.all': 'جميع الإعلانات',
+            'nav.login': 'تسجيل الدخول',
+            'nav.post': '+ نشر إعلان',
+            'footer.brand.desc': 'أكبر منصة لشراء وبيع وتأجير الأراضي الصناعية والمصانع والآلات والاستيراد والتصدير في إيران.',
+            'footer.col.categories': 'الفئات',
+            'footer.col.services': 'الخدمات',
+            'footer.col.links': 'روابط مفيدة',
+            'footer.cat.land': 'أراضي صناعية',
+            'footer.cat.factory': 'مصانع',
+            'footer.cat.machinery': 'آلات ومعدات',
+            'footer.cat.import': 'استيراد',
+            'footer.cat.export': 'تصدير',
+            'footer.svc.free': 'نشر إعلان مجاني',
+            'footer.svc.vip': 'إعلان مميز',
+            'footer.svc.consult': 'استشارات الاستثمار',
+            'footer.svc.eval': 'تقييم العقارات',
+            'footer.link.about': 'من نحن',
+            'footer.link.contact': 'اتصل بنا',
+            'footer.link.terms': 'الشروط والأحكام',
+            'footer.link.all': 'جميع الإعلانات',
+            'footer.copy': '© 2024 كارخانة ماركت — جميع الحقوق محفوظة.',
+            'home.eyebrow': '🔥 أكثر من 10,000 إعلان نشط في جميع أنحاء إيران',
+            'home.h1a': 'أكبر منصة لـ',
+            'home.h1b': 'السوق الصناعية الإيرانية',
+            'home.sub': 'شراء وبيع وتأجير الأراضي الصناعية والمصانع والآلات والاستيراد والتصدير — كل شيء في مكان واحد',
+            'home.search.ph': 'ابحث في الإعلانات... (مصنع، أرض، آلة)',
+            'home.search.all': 'جميع الفئات',
+            'home.search.land': 'أراضي صناعية',
+            'home.search.factory': 'مصانع',
+            'home.search.machinery': 'آلات ومعدات',
+            'home.search.import': 'استيراد',
+            'home.search.export': 'تصدير',
+            'home.search.btn': '🔍 بحث',
+            'stat.land': '🌍 أراضي صناعية',
+            'stat.factory': '🏭 مصانع',
+            'stat.machinery': '⚙️ آلات ومعدات',
+            'stat.import': '📦 مستورد',
+            'stat.export': '🚢 مصدّر',
+            'home.sec.cats': 'فئات الخدمات',
+            'home.see_all': 'عرض الكل ←',
+            'cat.land': 'أراضي صناعية',
+            'cat.factory': 'مصانع',
+            'cat.machinery': 'آلات ومعدات',
+            'cat.import': 'استيراد',
+            'cat.export': 'تصدير',
+            'cat.unit': 'إعلان',
+            'home.sec.featured': 'الإعلانات المميزة',
+            'home.sec.sale': 'بيع المنتجات',
+            'home.sale.empty': 'لا توجد إعلانات بيع نشطة',
+            'badge.vip': 'مميز',
+            'price.unit': 'تومان',
+            'status.sale': 'للبيع',
+            'status.rent': 'للإيجار',
+            'status.buy': 'مطلوب',
+            'home.sec.recent': 'أحدث الإعلانات',
+            'home.empty.title': 'لا توجد إعلانات بعد',
+            'home.empty.desc': 'أضف أول إعلان من لوحة الإدارة.',
+            'home.sec.why': 'لماذا كارخانة ماركت؟',
+            'why.1.title': 'معاملات آمنة',
+            'why.1.desc': 'جميع الإعلانات موثقة ومعتمدة.',
+            'why.2.title': 'تسجيل سريع',
+            'why.2.desc': 'انشر إعلانك في أقل من 5 دقائق.',
+            'why.3.title': 'تغطية شاملة',
+            'why.3.desc': 'إعلانات من جميع أنحاء إيران على منصة واحدة.',
+            'why.4.title': 'دعم 24/7',
+            'why.4.desc': 'فريق الدعم جاهز للمساعدة في أي وقت.',
+            'bc.home': 'الرئيسية',
+            'bc.all': 'جميع الإعلانات',
+            'lst.h1': '📋 جميع الإعلانات',
+            'lst.count': 'إعلان تم العثور عليه',
+            'lst.all': 'الكل',
+            'lst.sale': 'بيع',
+            'lst.rent': 'إيجار',
+            'lst.buy': 'شراء',
+            'lst.search.ph': 'بحث...',
+            'lst.search.btn': 'بحث',
+            'lst.empty.title': 'لم يتم العثور على إعلانات',
+            'lst.empty.desc': 'غيّر الفلاتر أو جرّب بحثاً مختلفاً.',
+            'cat.count_suffix': 'إعلان نشط في هذه الفئة',
+            'cat.empty.title': 'لا توجد إعلانات في هذه الفئة بعد',
+            'cat.empty.desc': 'كن أول من ينشر في هذه الفئة.',
+            'det.posted': 'نُشر في',
+            'det.desc.title': 'وصف الإعلان',
+            'det.call': '📞 التواصل مع البائع',
+            'det.wa': '💬 واتساب',
+            'det.negotiable': 'قابل للتفاوض',
+            'det.info.cat': 'الفئة',
+            'det.info.status': 'نوع الإعلان',
+            'det.info.area': 'المساحة',
+            'det.info.loc': 'الموقع',
+            'det.info.phone': 'الهاتف',
+            'det.info.date': 'تاريخ النشر',
+            'det.area.unit': 'م²',
+            'det.related': 'إعلانات مشابهة',
+            'det.see_all': 'عرض الكل ←'
+        }
+    };
+
+    function applyLang(lang) {
+        if (!T[lang]) lang = 'fa';
+        var t = T[lang];
+        var html = document.documentElement;
+
+        html.setAttribute('lang', lang);
+        html.setAttribute('dir', lang === 'en' ? 'ltr' : 'rtl');
+
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+            var key = el.getAttribute('data-i18n');
+            if (t[key] !== undefined) el.textContent = t[key];
+        });
+
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+            var key = el.getAttribute('data-i18n-placeholder');
+            if (t[key] !== undefined) el.setAttribute('placeholder', t[key]);
+        });
+
+        document.querySelectorAll('.lang-btn').forEach(function (btn) {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+
+        try { localStorage.setItem('km_lang', lang); } catch (e) {}
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.lang-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                applyLang(this.dataset.lang);
+            });
+        });
+
+        var saved;
+        try { saved = localStorage.getItem('km_lang'); } catch (e) {}
+        applyLang(saved || 'fa');
+    });
+})();
+</script>
+
+</body>
+</html>

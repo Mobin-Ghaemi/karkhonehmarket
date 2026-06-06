@@ -1,0 +1,66 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ category_label }} | کارخونه مارکت{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="{% url 'home' %}" data-i18n="bc.home">خانه</a>
+            <span>›</span>
+            <span>{{ category_label }}</span>
+        </div>
+        <h1>
+            {% if category == 'land' %}🌍{% elif category == 'factory' %}🏭{% elif category == 'machinery' %}⚙️{% elif category == 'import' %}📦{% else %}🚢{% endif %}
+            {{ category_label }}
+        </h1>
+        <p><span>{{ listings|length }}</span> <span data-i18n="cat.count_suffix">آگهی فعال در این دسته</span></p>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        {% if listings %}
+        <div class="listings-grid-auto">
+            {% for item in listings %}
+            <a href="{% url 'listing_detail' item.pk %}" class="listing-card">
+                <div class="card-img">
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    {% else %}
+                        <div class="card-img-placeholder">
+                            {% if item.category == 'land' %}🌍{% elif item.category == 'factory' %}🏭{% elif item.category == 'machinery' %}⚙️{% elif item.category == 'import' %}📦{% else %}🚢{% endif %}
+                        </div>
+                    {% endif %}
+                    <span class="card-badge badge-{{ item.status }}">{{ item.get_status_display }}</span>
+                    {% if item.is_featured %}<span class="badge-vip" data-i18n="badge.vip">⭐ ویژه</span>{% endif %}
+                </div>
+                <div class="card-body">
+                    <div class="card-cat">{{ item.get_category_display }}</div>
+                    <div class="card-title">{{ item.title }}</div>
+                    <div class="card-loc">📍 {{ item.location }}</div>
+                    <div class="card-foot">
+                        <div>
+                            <div class="card-price">{{ item.formatted_price }}</div>
+                            {% if item.price %}<div class="card-price-unit" data-i18n="price.unit">تومان</div>{% endif %}
+                        </div>
+                        {% if item.area %}<div class="card-area">📐 {{ item.area|floatformat:0 }} م²</div>{% endif %}
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty">
+            <div class="empty-icon">
+                {% if category == 'land' %}🌍{% elif category == 'factory' %}🏭{% elif category == 'machinery' %}⚙️{% elif category == 'import' %}📦{% else %}🚢{% endif %}
+            </div>
+            <h3 data-i18n="cat.empty.title">هنوز آگهی‌ای در این دسته ثبت نشده</h3>
+            <p data-i18n="cat.empty.desc">اولین نفری باشید که در این دسته آگهی ثبت می‌کند.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

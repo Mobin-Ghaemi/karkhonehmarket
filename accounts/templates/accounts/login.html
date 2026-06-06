@@ -1,0 +1,41 @@
+{% extends 'accounts/dashboard_base.html' %}
+
+{% block body %}
+<div class="auth-wrap">
+    <div class="auth-card">
+        <div class="auth-logo">
+            <div class="auth-logo-icon">🏭</div>
+            <div class="auth-logo-text">کارخونه مارکت</div>
+        </div>
+        <h2 class="auth-title">ورود به حساب</h2>
+        <p class="auth-sub">به پنل کاربری خود وارد شوید</p>
+
+        {% if error %}
+        <div class="alert alert-error">❌ {{ error }}</div>
+        {% endif %}
+
+        <form class="auth-form" method="post">
+            {% csrf_token %}
+            <div class="auth-input-group">
+                <label>نام کاربری یا ایمیل</label>
+                <input type="text" name="username" placeholder="username یا email" value="{{ form.username.value|default:'' }}" autofocus>
+            </div>
+            <div class="auth-input-group">
+                <label>رمز عبور</label>
+                <input type="password" name="password" placeholder="••••••••">
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;">
+                <label style="display:flex;align-items:center;gap:6px;color:var(--gray-500);cursor:pointer;">
+                    <input type="checkbox" name="remember"> مرا به خاطر بسپار
+                </label>
+                <a href="#" style="color:var(--blue-500);">فراموشی رمز</a>
+            </div>
+            <button type="submit" class="auth-btn">ورود به حساب</button>
+        </form>
+
+        <div class="auth-footer">
+            حساب ندارید؟ <a href="{% url 'register' %}">ثبت‌نام کنید</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'panel/base.html' %}
+
+{% block title %}درخواست‌های مشاوره{% endblock %}
+{% block page_title %}درخواست‌های مشاوره{% endblock %}
+{% block active_consultations %}active{% endblock %}
+
+{% block content %}
+<div class="card">
+ <div class="card-header">
+ <h3> درخواست‌های مشاوره ({{ items|length }})</h3>
+ </div>
+ <div class="card-body" style="padding-bottom:0;">
+ <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
+ <a href="/myadmin/consultations/" class="btn {% if not status_filter %}btn-primary{% else %}btn-outline{% endif %} btn-sm">همه</a>
+ <a href="/myadmin/consultations/?status=pending" class="btn {% if status_filter == 'pending' %}btn-primary{% else %}btn-outline{% endif %} btn-sm">در انتظار</a>
+ <a href="/myadmin/consultations/?status=contacted" class="btn {% if status_filter == 'contacted' %}btn-primary{% else %}btn-outline{% endif %} btn-sm">تماس گرفته</a>
+ <a href="/myadmin/consultations/?status=done" class="btn {% if status_filter == 'done' %}btn-primary{% else %}btn-outline{% endif %} btn-sm">انجام شده</a>
+ </div>
+ </div>
+ <div class="table-wrap">
+ <table>
+ <thead>
+ <tr>
+ <th>#</th>
+ <th>نام</th>
+ <th>تلفن</th>
+ <th>موضوع</th>
+ <th>توضیحات</th>
+ <th>کاربر</th>
+ <th>وضعیت</th>
+ <th>تاریخ</th>
+ <th>تغییر وضعیت</th>
+ </tr>
+ </thead>
+ <tbody>
+ {% for item in items %}
+ <tr>
+ <td style="color:#94A3B8; font-size:12px;">{{ item.pk }}</td>
+ <td style="font-weight:700;">{{ item.full_name }}</td>
+ <td style="font-family:monospace; font-size:13px; direction:ltr; text-align:right;">{{ item.phone }}</td>
+ <td><span class="badge badge-blue">{{ item.get_subject_display }}</span></td>
+ <td style="font-size:12px; color:#64748B; max-width:200px;">{{ item.description|truncatechars:50|default:'—' }}</td>
+ <td>
+ {% if item.user %}
+ <a href="/myadmin/users/{{ item.user.pk }}/" style="color:#3B82F6; text-decoration:none; font-size:12px;">{{ item.user.username }}</a>
+ {% else %}<span style="color:#94A3B8; font-size:12px;">مهمان</span>{% endif %}
+ </td>
+ <td>
+ {% if item.status == 'pending' %}<span class="badge badge-yellow">در انتظار</span>
+ {% elif item.status == 'contacted' %}<span class="badge badge-blue">تماس گرفته</span>
+ {% else %}<span class="badge badge-green">انجام شده</span>{% endif %}
+ </td>
+ <td style="font-size:12px; color:#64748B;">{{ item.created_at|date:"Y/m/d H:i" }}</td>
+ <td>
+ <form method="post" style="display:flex; gap:4px; flex-wrap:wrap;">
+ {% csrf_token %}
+ <input type="hidden" name="pk" value="{{ item.pk }}">
+ <button type="submit" name="status" value="pending" class="btn btn-sm btn-warning" {% if item.status == 'pending' %}disabled{% endif %}>در انتظار</button>
+ <button type="submit" name="status" value="contacted" class="btn btn-sm btn-primary" {% if item.status == 'contacted' %}disabled{% endif %}>تماس</button>
+ <button type="submit" name="status" value="done" class="btn btn-sm btn-success" {% if item.status == 'done' %}disabled{% endif %}>انجام</button>
+ </form>
+ </td>
+ </tr>
+ {% empty %}
+ <tr><td colspan="9" style="text-align:center; color:#94A3B8; padding:30px;">درخواستی یافت نشد</td></tr>
+ {% endfor %}
+ </tbody>
+ </table>
+ </div>
+</div>
+{% endblock %}

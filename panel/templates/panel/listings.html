@@ -1,0 +1,143 @@
+{% extends 'panel/base.html' %}
+
+{% block title %}آگهی‌ها{% endblock %}
+{% block page_title %}مدیریت آگهی‌ها{% endblock %}
+{% block active_listings %}active{% endblock %}
+
+{% block content %}
+<style>
+.toggle-wrap { display:flex; flex-direction:column; gap:8px; }
+.toggle-row { display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:12px; color:#64748B; }
+.toggle-label { font-size:11px; font-weight:600; color:#94A3B8; white-space:nowrap; }
+
+.toggle { position:relative; display:inline-block; width:36px; height:20px; flex-shrink:0; }
+.toggle input { opacity:0; width:0; height:0; position:absolute; }
+.toggle-slider {
+    position:absolute; cursor:pointer;
+    top:0; left:0; right:0; bottom:0;
+    background:#E2E8F0;
+    border-radius:20px;
+    transition:0.2s;
+}
+.toggle-slider:before {
+    position:absolute; content:"";
+    height:14px; width:14px;
+    left:3px; bottom:3px;
+    background:white;
+    border-radius:50%;
+    transition:0.2s;
+    box-shadow:0 1px 3px rgba(0,0,0,0.2);
+}
+.toggle input:checked + .toggle-slider { background:#10B981; }
+.toggle input:checked + .toggle-slider.is-featured-slider { background:#F59E0B; }
+.toggle input:checked + .toggle-slider:before { transform:translateX(16px); }
+</style>
+
+<div class="card">
+  <div class="card-header">
+    <h3>لیست آگهی‌ها ({{ listings|length }})</h3>
+  </div>
+  <div class="card-body" style="padding-bottom:0;">
+    <form method="get">
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
+        <input type="text" name="q" value="{{ q }}" class="form-control" style="max-width:240px;" placeholder="جستجو در عنوان...">
+        <select name="cat" class="form-control" style="max-width:160px;">
+          <option value="">همه دسته‌ها</option>
+          {% for slug, name in categories %}
+          <option value="{{ slug }}" {% if cat == slug %}selected{% endif %}>{{ name }}</option>
+          {% endfor %}
+        </select>
+        <select name="status" class="form-control" style="max-width:160px;">
+          <option value="">همه وضعیت‌ها</option>
+          <option value="active" {% if status_filter == 'active' %}selected{% endif %}>فعال</option>
+          <option value="inactive" {% if status_filter == 'inactive' %}selected{% endif %}>غیرفعال</option>
+          <option value="featured" {% if status_filter == 'featured' %}selected{% endif %}>ویژه</option>
+        </select>
+        <button type="submit" class="btn btn-primary">فیلتر</button>
+        {% if q or cat or status_filter %}
+        <a href="/myadmin/listings/" class="btn btn-outline">پاک کردن</a>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>عنوان</th>
+          <th>دسته‌بندی</th>
+          <th>نوع</th>
+          <th>موقعیت</th>
+          <th>قیمت</th>
+          <th>کاربر</th>
+          <th style="text-align:center; min-width:110px;">فعال / ویژه</th>
+          <th>تاریخ</th>
+          <th>حذف</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for listing in listings %}
+        <tr>
+          <td style="color:#94A3B8; font-size:12px;">{{ listing.pk }}</td>
+          <td style="font-weight:600; max-width:200px;">{{ listing.title|truncatechars:40 }}</td>
+          <td><span class="badge badge-blue">{{ listing.get_category_display }}</span></td>
+          <td><span class="badge badge-gray">{{ listing.get_status_display }}</span></td>
+          <td style="font-size:12px; color:#64748B;">{{ listing.location|truncatechars:25 }}</td>
+          <td style="font-size:12px; font-weight:600;">{{ listing.formatted_price }}</td>
+          <td>
+            {% if listing.owner %}
+            <a href="/myadmin/users/{{ listing.owner.pk }}/" style="color:#3B82F6; text-decoration:none; font-size:12px;">{{ listing.owner.username }}</a>
+            {% else %}<span style="color:#94A3B8; font-size:12px;">—</span>{% endif %}
+          </td>
+
+          <!-- Toggles -->
+          <td style="text-align:center;">
+            <div class="toggle-wrap">
+              <!-- Active toggle -->
+              <div class="toggle-row">
+                <span class="toggle-label">فعال</span>
+                <form method="post" action="/myadmin/listings/{{ listing.pk }}/action/" style="display:inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="toggle_active">
+                  <label class="toggle" title="{% if listing.is_active %}غیرفعال کردن{% else %}فعال کردن{% endif %}">
+                    <input type="checkbox" {% if listing.is_active %}checked{% endif %} onchange="this.closest('form').submit()">
+                    <span class="toggle-slider"></span>
+                  </label>
+                </form>
+              </div>
+              <!-- Featured toggle -->
+              <div class="toggle-row">
+                <span class="toggle-label">ویژه</span>
+                <form method="post" action="/myadmin/listings/{{ listing.pk }}/action/" style="display:inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="toggle_featured">
+                  <label class="toggle" title="{% if listing.is_featured %}حذف ویژه{% else %}ویژه کردن{% endif %}">
+                    <input type="checkbox" {% if listing.is_featured %}checked{% endif %} onchange="this.closest('form').submit()">
+                    <span class="toggle-slider is-featured-slider"></span>
+                  </label>
+                </form>
+              </div>
+            </div>
+          </td>
+
+          <td style="font-size:12px; color:#64748B;">{{ listing.created_at|date:"Y/m/d" }}</td>
+
+          <!-- Delete -->
+          <td>
+            <form method="post" action="/myadmin/listings/{{ listing.pk }}/action/" onsubmit="return confirm('حذف شود؟')">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="delete">
+              <button type="submit" class="btn btn-sm btn-danger" style="padding:5px 10px; font-size:11px;">حذف</button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="10" style="text-align:center; color:#94A3B8; padding:30px;">آگهی‌ای یافت نشد</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

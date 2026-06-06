@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360">
+  <defs>
+    <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#042f2e"/>
+      <stop offset="100%" stop-color="#065F46"/>
+    </linearGradient>
+    <linearGradient id="sea4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0369a1"/>
+      <stop offset="100%" stop-color="#0c4a6e"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="360" fill="url(#g4)"/>
+  <!-- Sea -->
+  <rect x="0" y="240" width="600" height="120" fill="url(#sea4)" rx="0"/>
+  <!-- Waves -->
+  <path d="M0,255 Q75,245 150,255 Q225,265 300,255 Q375,245 450,255 Q525,265 600,255" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3"/>
+  <path d="M0,275 Q75,265 150,275 Q225,285 300,275 Q375,265 450,275 Q525,285 600,275" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+  <!-- Ship hull -->
+  <path d="M100,240 L500,240 L480,280 L120,280 Z" fill="#134e4a" stroke="#0d9488" stroke-width="2"/>
+  <!-- Ship deck -->
+  <rect x="130" y="200" width="340" height="42" rx="4" fill="#115e59"/>
+  <!-- Containers on ship -->
+  <rect x="150" y="175" width="55" height="28" rx="3" fill="#0D9488" opacity="0.9"/>
+  <rect x="215" y="175" width="55" height="28" rx="3" fill="#0F766E" opacity="0.9"/>
+  <rect x="280" y="175" width="55" height="28" rx="3" fill="#0D9488" opacity="0.9"/>
+  <rect x="345" y="175" width="55" height="28" rx="3" fill="#0F766E" opacity="0.9"/>
+  <rect x="160" y="150" width="50" height="28" rx="3" fill="#14B8A6" opacity="0.7"/>
+  <rect x="220" y="150" width="50" height="28" rx="3" fill="#0D9488" opacity="0.7"/>
+  <rect x="280" y="150" width="50" height="28" rx="3" fill="#14B8A6" opacity="0.7"/>
+  <rect x="340" y="150" width="50" height="28" rx="3" fill="#0D9488" opacity="0.7"/>
+  <!-- Crane on dock -->
+  <rect x="50" y="130" width="8" height="110" fill="#1e3a2a" opacity="0.7"/>
+  <rect x="30" y="128" width="100" height="8" rx="3" fill="#1e3a2a" opacity="0.7"/>
+  <line x1="80" y1="136" x2="80" y2="195" stroke="#2d5a3d" stroke-width="3" stroke-dasharray="4,3"/>
+  <!-- Down arrow (import) -->
+  <circle cx="470" cy="110" r="28" fill="rgba(20,184,166,0.2)" stroke="#14B8A6" stroke-width="2"/>
+  <line x1="470" y1="96" x2="470" y2="126" stroke="#14B8A6" stroke-width="3"/>
+  <polygon points="460,118 480,118 470,132" fill="#14B8A6"/>
+  <!-- Stars -->
+  <circle cx="520" cy="40" r="2" fill="white" opacity="0.4"/>
+  <circle cx="560" cy="20" r="1.5" fill="white" opacity="0.3"/>
+  <circle cx="400" cy="30" r="1" fill="white" opacity="0.3"/>
+  <!-- Label -->
+  <rect x="170" y="305" width="260" height="36" rx="18" fill="rgba(0,0,0,0.4)"/>
+  <text x="300" y="328" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="bold" fill="white" opacity="0.95">واردات</text>
+</svg>

@@ -1,0 +1,80 @@
+{% extends 'panel/base.html' %}
+
+{% block title %}کاربران{% endblock %}
+{% block page_title %}مدیریت کاربران{% endblock %}
+{% block active_users %}active{% endblock %}
+
+{% block content %}
+<div class="card">
+ <div class="card-header">
+ <h3> لیست کاربران ({{ users|length }})</h3>
+ </div>
+ <div class="card-body" style="padding-bottom: 0;">
+ <form method="get" class="search-bar">
+ <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="جستجو بر اساس نام، ایمیل...">
+ <button type="submit" class="btn btn-primary">جستجو</button>
+ {% if q %}<a href="/myadmin/users/" class="btn btn-outline">پاک کردن</a>{% endif %}
+ </form>
+ </div>
+ <div class="table-wrap">
+ <table>
+ <thead>
+ <tr>
+ <th>#</th>
+ <th>نام کاربری</th>
+ <th>نام کامل</th>
+ <th>ایمیل</th>
+ <th>عضویت</th>
+ <th>تأیید</th>
+ <th>وضعیت</th>
+ <th>تاریخ عضویت</th>
+ <th>عملیات</th>
+ </tr>
+ </thead>
+ <tbody>
+ {% for user in users %}
+ <tr>
+ <td style="color:#94A3B8; font-size:12px;">{{ user.pk }}</td>
+ <td>
+ <a href="/myadmin/users/{{ user.pk }}/" style="font-weight:700; color:#1E293B; text-decoration:none;">{{ user.username }}</a>
+ {% if user.is_staff %}<span class="badge badge-purple" style="margin-right:4px;">ادمین</span>{% endif %}
+ {% if user.is_superuser %}<span class="badge badge-red" style="margin-right:4px;">سوپر</span>{% endif %}
+ </td>
+ <td>{{ user.get_full_name|default:'—' }}</td>
+ <td style="font-size:12px; color:#64748B;">{{ user.email|default:'—' }}</td>
+ <td>
+ {% if user.profile.membership == 'premium' %}
+ <span class="badge badge-purple">ویژه</span>
+ {% elif user.profile.membership == 'gold' %}
+ <span class="badge badge-yellow">طلایی</span>
+ {% else %}
+ <span class="badge badge-gray">رایگان</span>
+ {% endif %}
+ </td>
+ <td>
+ {% if user.profile.is_verified %}
+ <span class="badge badge-green"> تأیید</span>
+ {% else %}
+ <span class="badge badge-gray">—</span>
+ {% endif %}
+ </td>
+ <td>
+ {% if user.is_active %}
+ <span class="badge badge-green">فعال</span>
+ {% else %}
+ <span class="badge badge-red">غیرفعال</span>
+ {% endif %}
+ </td>
+ <td style="font-size:12px; color:#64748B;">{{ user.date_joined|date:"Y/m/d" }}</td>
+ <td>
+ <a href="/myadmin/users/{{ user.pk }}/" class="btn btn-outline btn-sm">جزئیات</a>
+ </td>
+ </tr>
+ {% empty %}
+ <tr><td colspan="9" style="text-align:center; color:#94A3B8; padding:30px;">کاربری یافت نشد</td></tr>
+ {% endfor %}
+ </tbody>
+ </table>
+ </div>
+</div>
+{% endblock %}

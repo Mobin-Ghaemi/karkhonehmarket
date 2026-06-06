@@ -1,0 +1,597 @@
+{% extends 'core/base.html' %}
+
+{% block title %}محصولات | کارخونه مارکت{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ===== PRODUCTS PAGE HEADER ===== */
+    .products-hero {
+        background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 100%);
+        padding: 36px 0 28px;
+        position: relative;
+        overflow: hidden;
+    }
+    .products-hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h20v20H0zM20 20h20v20H20z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    .products-hero .container { position: relative; z-index: 1; }
+    .products-hero-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+    }
+    .products-hero h1 {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .products-hero p {
+        font-size: 0.82rem;
+        color: rgba(255,255,255,0.55);
+        margin-top: 4px;
+    }
+    .hero-stat-chips {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    .hero-stat-chip {
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.18);
+        color: rgba(255,255,255,0.85);
+        padding: 6px 14px;
+        border-radius: 100px;
+        font-size: 0.76rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        backdrop-filter: blur(4px);
+    }
+    .hero-stat-chip strong { color: white; font-weight: 700; }
+
+    /* ===== TABS BAR ===== */
+    .tabs-bar {
+        background: white;
+        border-bottom: 2px solid var(--gray-200);
+        position: sticky;
+        top: 64px;
+        z-index: 100;
+    }
+    .tabs-nav {
+        display: flex;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .tabs-nav::-webkit-scrollbar { display: none; }
+    .tab-btn {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 14px 22px;
+        font-size: 0.84rem;
+        font-weight: 500;
+        color: var(--gray-500);
+        border-bottom: 2.5px solid transparent;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: all 0.15s;
+        background: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        font-family: inherit;
+        margin-bottom: -2px;
+    }
+    .tab-btn:hover { color: var(--blue-600); background: var(--blue-50); }
+    .tab-btn.active {
+        color: var(--blue-600);
+        border-bottom-color: var(--blue-500);
+        font-weight: 700;
+    }
+    .tab-count {
+        background: var(--gray-100);
+        color: var(--gray-500);
+        padding: 2px 8px;
+        border-radius: 100px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        min-width: 22px;
+        text-align: center;
+        transition: all 0.15s;
+    }
+    .tab-btn.active .tab-count {
+        background: var(--blue-500);
+        color: white;
+    }
+
+    /* ===== FILTER ROW ===== */
+    .products-filter {
+        background: var(--gray-50);
+        border-bottom: 1px solid var(--gray-200);
+        padding: 12px 0;
+    }
+    .filter-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    .filter-left { display: flex; align-items: center; gap: 10px; }
+    .filter-label {
+        font-size: 0.78rem;
+        color: var(--gray-400);
+        font-weight: 500;
+        white-space: nowrap;
+    }
+    .status-chips { display: flex; gap: 6px; }
+    .status-chip {
+        padding: 6px 14px;
+        border-radius: 100px;
+        border: 1.5px solid var(--gray-200);
+        background: white;
+        color: var(--gray-500);
+        font-size: 0.78rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.15s;
+        font-family: inherit;
+    }
+    .status-chip:hover { border-color: var(--blue-400); color: var(--blue-600); }
+    .status-chip.active {
+        border-color: var(--blue-500);
+        background: var(--blue-500);
+        color: white;
+        font-weight: 600;
+    }
+    .filter-right { display: flex; align-items: center; gap: 8px; }
+    .sort-label { font-size: 0.78rem; color: var(--gray-400); }
+    .sort-select {
+        border: 1.5px solid var(--gray-200);
+        border-radius: var(--radius-sm);
+        padding: 6px 12px;
+        font-family: inherit;
+        font-size: 0.78rem;
+        color: var(--gray-700);
+        background: white;
+        cursor: pointer;
+        outline: none;
+    }
+    .sort-select:focus { border-color: var(--blue-400); }
+    .results-info {
+        font-size: 0.78rem;
+        color: var(--gray-400);
+    }
+    .results-info strong { color: var(--blue-600); }
+
+    /* ===== PRODUCTS GRID ===== */
+    .products-section { padding: 32px 0 60px; }
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        align-items: start;
+    }
+
+    /* ===== PRODUCT CARD ===== */
+    .product-card {
+        background: white;
+        border: 1.5px solid var(--gray-200);
+        border-radius: var(--radius);
+        overflow: hidden;
+        transition: all 0.22s;
+        position: relative;
+    }
+    .product-card:hover {
+        border-color: var(--blue-400);
+        box-shadow: 0 12px 40px rgba(32,129,226,0.14);
+        transform: translateY(-5px);
+    }
+    .pc-img {
+        aspect-ratio: 4/3;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--blue-50) 0%, #EFF6FF 100%);
+    }
+    .pc-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pc-placeholder {
+        width: 100%; height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3.5rem;
+        opacity: 0.2;
+    }
+    .pc-badges {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-end;
+    }
+    html[dir="ltr"] .pc-badges { right: auto; left: 10px; align-items: flex-start; }
+    .pc-status {
+        padding: 4px 12px;
+        border-radius: 100px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        backdrop-filter: blur(6px);
+    }
+    .pc-vip {
+        background: var(--blue-600);
+        color: white;
+        padding: 3px 10px;
+        border-radius: 100px;
+        font-size: 0.65rem;
+        font-weight: 700;
+    }
+
+    /* ===== CARD BODY ===== */
+    .pc-body { padding: 16px; }
+    .pc-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+    }
+    .pc-cat {
+        font-size: 0.69rem;
+        font-weight: 700;
+        color: var(--blue-600);
+        background: var(--blue-50);
+        border: 1px solid var(--blue-100);
+        padding: 3px 10px;
+        border-radius: 100px;
+        letter-spacing: 0.2px;
+    }
+    .pc-id {
+        font-size: 0.65rem;
+        color: var(--gray-400);
+    }
+    .pc-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--gray-900);
+        line-height: 1.55;
+        margin-bottom: 10px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 2.8em;
+    }
+    .pc-meta {
+        display: flex;
+        gap: 14px;
+        font-size: 0.73rem;
+        color: var(--gray-400);
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+    }
+    .pc-meta span { display: flex; align-items: center; gap: 3px; }
+    .pc-divider {
+        height: 1px;
+        background: var(--gray-100);
+        margin-bottom: 14px;
+    }
+    .pc-footer {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 10px;
+    }
+    .pc-price-wrap {}
+    .pc-price {
+        font-size: 1.1rem;
+        font-weight: 900;
+        color: var(--blue-700);
+        line-height: 1;
+    }
+    .pc-price-unit {
+        font-size: 0.64rem;
+        color: var(--gray-400);
+        margin-top: 3px;
+        font-weight: 400;
+    }
+    .pc-actions { display: flex; gap: 6px; align-items: center; }
+    .pc-contact {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: var(--blue-500);
+        color: white;
+        padding: 8px 14px;
+        border-radius: var(--radius-sm);
+        font-size: 0.77rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.15s;
+        white-space: nowrap;
+        box-shadow: 0 2px 8px rgba(32,129,226,0.3);
+    }
+    .pc-contact:hover { background: var(--blue-600); }
+    .pc-detail {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        background: white;
+        border: 1.5px solid var(--gray-200);
+        color: var(--gray-500);
+        border-radius: var(--radius-sm);
+        font-size: 0.8rem;
+        text-decoration: none;
+        transition: all 0.15s;
+    }
+    .pc-detail:hover { border-color: var(--blue-400); color: var(--blue-600); }
+
+    /* ===== EMPTY STATE ===== */
+    .products-empty {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 24px;
+        text-align: center;
+        color: var(--gray-400);
+        grid-column: 1 / -1;
+    }
+    .products-empty .empty-icon { font-size: 4rem; margin-bottom: 16px; opacity: 0.3; }
+    .products-empty h3 { font-size: 1.05rem; color: var(--gray-700); margin-bottom: 6px; }
+    .products-empty p { font-size: 0.82rem; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+        .products-grid { grid-template-columns: repeat(2, 1fr); }
+        .hero-stat-chips { display: none; }
+    }
+    @media (max-width: 768px) {
+        .products-grid { grid-template-columns: 1fr; }
+        .products-hero-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+        .filter-row { flex-direction: column; align-items: flex-start; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<div class="products-hero">
+    <div class="container">
+        <div class="products-hero-inner">
+            <div>
+                <h1>🏪 <span data-i18n="nav.products">محصولات</span></h1>
+                <p>{{ stats.all }} محصول در ۵ دسته‌بندی صنعتی</p>
+            </div>
+            <div class="hero-stat-chips">
+                <div class="hero-stat-chip">🌍 <strong>{{ stats.land }}</strong> زمین</div>
+                <div class="hero-stat-chip">🏭 <strong>{{ stats.factory }}</strong> کارخانه</div>
+                <div class="hero-stat-chip">⚙️ <strong>{{ stats.machinery }}</strong> ماشین‌آلات</div>
+                <div class="hero-stat-chip">📦 <strong>{{ stats.import }}</strong> واردات</div>
+                <div class="hero-stat-chip">🚢 <strong>{{ stats.export }}</strong> صادرات</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CATEGORY TABS -->
+<div class="tabs-bar">
+    <div class="container">
+        <div class="tabs-nav">
+            <button class="tab-btn active" data-tab="all">
+                همه <span class="tab-count">{{ stats.all }}</span>
+            </button>
+            <button class="tab-btn" data-tab="land">
+                🌍 زمین صنعتی <span class="tab-count">{{ stats.land }}</span>
+            </button>
+            <button class="tab-btn" data-tab="factory">
+                🏭 کارخانه <span class="tab-count">{{ stats.factory }}</span>
+            </button>
+            <button class="tab-btn" data-tab="machinery">
+                ⚙️ ماشین‌آلات <span class="tab-count">{{ stats.machinery }}</span>
+            </button>
+            <button class="tab-btn" data-tab="import">
+                📦 واردات <span class="tab-count">{{ stats.import }}</span>
+            </button>
+            <button class="tab-btn" data-tab="export">
+                🚢 صادرات <span class="tab-count">{{ stats.export }}</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- FILTER & SORT ROW -->
+<div class="products-filter">
+    <div class="container">
+        <div class="filter-row">
+            <div class="filter-left">
+                <span class="filter-label">نوع آگهی:</span>
+                <div class="status-chips">
+                    <button class="status-chip active" data-status="all">همه</button>
+                    <button class="status-chip" data-status="sale">🔖 فروش</button>
+                    <button class="status-chip" data-status="rent">🔑 اجاره</button>
+                    <button class="status-chip" data-status="buy">🛒 خرید</button>
+                </div>
+            </div>
+            <div class="filter-right">
+                <span class="sort-label">مرتب‌سازی:</span>
+                <select class="sort-select" id="sortSelect">
+                    <option value="newest">جدیدترین</option>
+                    <option value="price_desc">گران‌ترین</option>
+                    <option value="price_asc">ارزان‌ترین</option>
+                </select>
+                <span class="results-info"><strong id="resultsCount">{{ stats.all }}</strong> نتیجه</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PRODUCTS GRID -->
+<section class="products-section">
+    <div class="container">
+        <div class="products-grid" id="productsGrid">
+
+            {% for item in listings %}
+            <div class="product-card"
+                 data-category="{{ item.category }}"
+                 data-status="{{ item.status }}"
+                 data-price="{{ item.price|default:0 }}"
+                 data-id="{{ item.pk }}">
+
+                <!-- Image -->
+                <div class="pc-img">
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    {% else %}
+                        <div class="pc-placeholder">
+                            {% if item.category == 'land' %}🌍{% elif item.category == 'factory' %}🏭{% elif item.category == 'machinery' %}⚙️{% elif item.category == 'import' %}📦{% else %}🚢{% endif %}
+                        </div>
+                    {% endif %}
+                    <div class="pc-badges">
+                        <span class="pc-status badge-{{ item.status }}">{{ item.get_status_display }}</span>
+                        {% if item.is_featured %}<span class="pc-vip">⭐ ویژه</span>{% endif %}
+                    </div>
+                </div>
+
+                <!-- Body -->
+                <div class="pc-body">
+                    <div class="pc-header">
+                        <span class="pc-cat">{{ item.get_category_display }}</span>
+                        <span class="pc-id">#{{ item.pk }}</span>
+                    </div>
+                    <div class="pc-title">{{ item.title }}</div>
+                    <div class="pc-meta">
+                        <span>📍 {{ item.location }}</span>
+                        {% if item.area %}<span>📐 {{ item.area|floatformat:0 }} م²</span>{% endif %}
+                    </div>
+                    <div class="pc-divider"></div>
+                    <div class="pc-footer">
+                        <div class="pc-price-wrap">
+                            <div class="pc-price">{{ item.formatted_price }}</div>
+                            {% if item.price %}<div class="pc-price-unit">تومان</div>{% endif %}
+                        </div>
+                        <div class="pc-actions">
+                            <a href="tel:{{ item.contact }}" class="pc-contact">📞 تماس</a>
+                            <a href="{% url 'listing_detail' item.pk %}" class="pc-detail" title="جزئیات">↗</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="products-empty" style="display:flex;">
+                <div class="empty-icon">📦</div>
+                <h3>هنوز محصولی ثبت نشده</h3>
+                <p>اولین محصول را از پنل ادمین اضافه کنید.</p>
+            </div>
+            {% endfor %}
+
+            <!-- Empty state for filter (hidden by default) -->
+            {% if listings %}
+            <div class="products-empty" id="emptyState">
+                <div class="empty-icon">🔍</div>
+                <h3>محصولی یافت نشد</h3>
+                <p>فیلتر دیگری را امتحان کنید.</p>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+    var activeCategory = 'all';
+    var activeStatus = 'all';
+    var grid = document.getElementById('productsGrid');
+    var emptyState = document.getElementById('emptyState');
+    var resultsCount = document.getElementById('resultsCount');
+    var sortSelect = document.getElementById('sortSelect');
+    if (!grid) return;
+
+    function getCards() {
+        return Array.from(grid.querySelectorAll('.product-card'));
+    }
+
+    function applyFilters() {
+        var visible = 0;
+        getCards().forEach(function (card) {
+            var matchCat = activeCategory === 'all' || card.dataset.category === activeCategory;
+            var matchStatus = activeStatus === 'all' || card.dataset.status === activeStatus;
+            if (matchCat && matchStatus) {
+                card.style.display = '';
+                visible++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        if (resultsCount) resultsCount.textContent = visible;
+        if (emptyState) emptyState.style.display = visible === 0 ? 'flex' : 'none';
+    }
+
+    function applySort() {
+        var sortBy = sortSelect ? sortSelect.value : 'newest';
+        var cards = getCards();
+        cards.sort(function (a, b) {
+            if (sortBy === 'newest') {
+                return parseInt(b.dataset.id) - parseInt(a.dataset.id);
+            }
+            var pa = parseInt(a.dataset.price) || 0;
+            var pb = parseInt(b.dataset.price) || 0;
+            if (sortBy === 'price_desc') {
+                if (pb === 0) return -1;
+                if (pa === 0) return 1;
+                return pb - pa;
+            }
+            if (sortBy === 'price_asc') {
+                if (pa === 0) return 1;
+                if (pb === 0) return -1;
+                return pa - pb;
+            }
+            return 0;
+        });
+        cards.forEach(function (card) { grid.appendChild(card); });
+        if (emptyState) grid.appendChild(emptyState);
+        applyFilters();
+    }
+
+    // Tab buttons
+    document.querySelectorAll('.tab-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            activeCategory = btn.dataset.tab;
+            applyFilters();
+        });
+    });
+
+    // Status chips
+    document.querySelectorAll('.status-chip').forEach(function (chip) {
+        chip.addEventListener('click', function () {
+            document.querySelectorAll('.status-chip').forEach(function (c) { c.classList.remove('active'); });
+            chip.classList.add('active');
+            activeStatus = chip.dataset.status;
+            applyFilters();
+        });
+    });
+
+    // Sort
+    if (sortSelect) {
+        sortSelect.addEventListener('change', applySort);
+    }
+})();
+</script>
+{% endblock %}

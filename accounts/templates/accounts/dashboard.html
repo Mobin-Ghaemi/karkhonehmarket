@@ -1,0 +1,133 @@
+{% extends 'accounts/dashboard_base.html' %}
+
+{% block title %}داشبورد{% endblock %}
+{% block page_title %}داشبورد{% endblock %}
+
+{% block content %}
+
+<!-- Stats -->
+<div class="stat-cards">
+    <div class="stat-card">
+        <div class="stat-card-icon icon-blue">📋</div>
+        <div>
+            <div class="stat-card-val">{{ stats.total }}</div>
+            <div class="stat-card-lbl">کل آگهی‌ها</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-card-icon icon-green">✅</div>
+        <div>
+            <div class="stat-card-val">{{ stats.active }}</div>
+            <div class="stat-card-lbl">آگهی فعال</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-card-icon icon-gold">⭐</div>
+        <div>
+            <div class="stat-card-val">{{ stats.featured }}</div>
+            <div class="stat-card-lbl">آگهی ویژه</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-card-icon icon-purple">🏷️</div>
+        <div>
+            <div class="stat-card-val">{{ stats.sale }}</div>
+            <div class="stat-card-lbl">آگهی فروشی</div>
+        </div>
+    </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 320px;gap:20px;">
+
+    <!-- Recent Listings -->
+    <div class="dash-card">
+        <div class="dash-card-head">
+            <h3>📋 آخرین آگهی‌های من</h3>
+            <a href="{% url 'my_listings' %}" class="dash-link">مشاهده همه ←</a>
+        </div>
+        {% if recent %}
+        <table>
+            <thead>
+                <tr>
+                    <th>عنوان آگهی</th>
+                    <th>دسته‌بندی</th>
+                    <th>نوع</th>
+                    <th>قیمت</th>
+                    <th>وضعیت</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in recent %}
+                <tr>
+                    <td>
+                        <a href="{% url 'listing_detail' item.pk %}" class="tbl-title" style="color:var(--blue-600);">
+                            {{ item.title|truncatechars:35 }}
+                        </a>
+                    </td>
+                    <td>{{ item.get_category_display }}</td>
+                    <td>
+                        <span class="pill {% if item.status == 'sale' %}pill-blue{% elif item.status == 'rent' %}pill-green{% else %}pill-purple{% endif %}">
+                            {{ item.get_status_display }}
+                        </span>
+                    </td>
+                    <td>{{ item.formatted_price }}</td>
+                    <td>
+                        <span class="pill {% if item.is_active %}pill-green{% else %}pill-gray{% endif %}">
+                            {% if item.is_active %}فعال{% else %}غیرفعال{% endif %}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div style="text-align:center;padding:40px;color:var(--gray-400);">
+            <div style="font-size:2.5rem;margin-bottom:12px;">📭</div>
+            <p style="font-size:0.85rem;">هنوز آگهی‌ای ثبت نکرده‌اید.</p>
+            <a href="{% url 'post_listing' %}" style="color:var(--blue-500);font-size:0.83rem;font-weight:600;">+ ثبت اولین آگهی</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Side panel -->
+    <div style="display:flex;flex-direction:column;gap:16px;">
+
+        <!-- Profile card -->
+        <div class="dash-card" style="padding:20px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                <div class="user-avatar" style="width:52px;height:52px;font-size:1.3rem;">
+                    {% if profile.avatar %}
+                        <img src="{{ profile.avatar.url }}" alt="">
+                    {% else %}
+                        {{ request.user.first_name|first|upper }}{{ request.user.last_name|first|upper }}
+                    {% endif %}
+                </div>
+                <div>
+                    <div style="font-weight:700;font-size:0.92rem;color:var(--gray-900);">{{ request.user.get_full_name|default:request.user.username }}</div>
+                    <div style="font-size:0.75rem;color:var(--gray-400);margin-top:3px;">{{ request.user.email }}</div>
+                </div>
+            </div>
+            <div style="font-size:0.78rem;color:var(--gray-400);display:flex;flex-direction:column;gap:6px;">
+                {% if profile.phone %}<span>📞 {{ profile.phone }}</span>{% endif %}
+                {% if profile.city %}<span>📍 {{ profile.city }}</span>{% endif %}
+                {% if profile.company %}<span>🏢 {{ profile.company }}</span>{% endif %}
+            </div>
+            <a href="{% url 'edit_profile' %}" style="display:block;text-align:center;margin-top:14px;background:var(--gray-100);color:var(--gray-700);padding:8px;border-radius:8px;font-size:0.8rem;font-weight:600;transition:background 0.15s;" onmouseover="this.style.background='var(--blue-50)';this.style.color='var(--blue-600)'" onmouseout="this.style.background='var(--gray-100)';this.style.color='var(--gray-700)'">
+                ✏️ ویرایش پروفایل
+            </a>
+        </div>
+
+        <!-- Quick links -->
+        <div class="dash-card" style="padding:16px;">
+            <div style="font-weight:700;font-size:0.83rem;color:var(--gray-700);margin-bottom:12px;">دسترسی سریع</div>
+            <div style="display:flex;flex-direction:column;gap:2px;">
+                <a href="{% url 'post_listing' %}" style="display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:7px;font-size:0.8rem;color:var(--gray-600);transition:background 0.12s;" onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background='transparent'">➕ ثبت آگهی جدید</a>
+                <a href="{% url 'my_listings' %}" style="display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:7px;font-size:0.8rem;color:var(--gray-600);transition:background 0.12s;" onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background='transparent'">📋 آگهی‌های من</a>
+                <a href="{% url 'edit_profile' %}" style="display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:7px;font-size:0.8rem;color:var(--gray-600);transition:background 0.12s;" onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background='transparent'">👤 ویرایش پروفایل</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

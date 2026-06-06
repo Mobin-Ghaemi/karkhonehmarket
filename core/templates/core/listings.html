@@ -1,0 +1,97 @@
+{% extends 'core/base.html' %}
+
+{% block title %}همه آگهی‌ها | کارخونه مارکت{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="{% url 'home' %}" data-i18n="bc.home">خانه</a>
+            <span>›</span>
+            <span data-i18n="bc.all">همه آگهی‌ها</span>
+        </div>
+        <h1 data-i18n="lst.h1">📋 همه آگهی‌ها</h1>
+        <p><span>{{ listings|length }}</span> <span data-i18n="lst.count">آگهی یافت شد</span></p>
+    </div>
+</div>
+
+<div class="filter-bar">
+    <div class="container">
+        <form class="filter-inner" method="get" action="{% url 'listings' %}">
+            {% if search %}<input type="hidden" name="q" value="{{ search }}">{% endif %}
+
+            <a href="{% url 'listings' %}" class="chip {% if not active_category and not active_status %}active{% endif %}" data-i18n="lst.all">همه</a>
+
+            {% for val, label in categories %}
+            <a href="?category={{ val }}{% if active_status %}&status={{ active_status }}{% endif %}"
+               class="chip {% if active_category == val %}active{% endif %}">
+                {% if val == 'land' %}🌍{% elif val == 'factory' %}🏭{% elif val == 'machinery' %}⚙️{% elif val == 'import' %}📦{% else %}🚢{% endif %}
+                <span data-i18n="cat.{{ val }}">{{ label }}</span>
+            </a>
+            {% endfor %}
+
+            <div class="filter-sep"></div>
+
+            <a href="?{% if active_category %}category={{ active_category }}&{% endif %}status=sale"
+               class="chip {% if active_status == 'sale' %}active{% endif %}" data-i18n="lst.sale">فروش</a>
+            <a href="?{% if active_category %}category={{ active_category }}&{% endif %}status=rent"
+               class="chip {% if active_status == 'rent' %}active{% endif %}" data-i18n="lst.rent">اجاره</a>
+            <a href="?{% if active_category %}category={{ active_category }}&{% endif %}status=buy"
+               class="chip {% if active_status == 'buy' %}active{% endif %}" data-i18n="lst.buy">خرید</a>
+
+            <div style="margin-right:auto;display:flex;gap:8px;align-items:center;">
+                <input type="text" name="q" value="{{ search }}"
+                    data-i18n-placeholder="lst.search.ph"
+                    placeholder="جستجو..."
+                    style="border:1.5px solid var(--gray-200);border-radius:100px;padding:7px 16px;font-family:inherit;font-size:0.8rem;outline:none;width:170px;color:var(--text);">
+                <button type="submit" data-i18n="lst.search.btn"
+                    style="background:var(--blue-500);color:white;border:none;padding:8px 16px;border-radius:100px;font-family:inherit;font-size:0.8rem;cursor:pointer;font-weight:600;">جستجو</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        {% if listings %}
+        <div class="listings-grid">
+            {% for item in listings %}
+            <a href="{% url 'listing_detail' item.pk %}" class="listing-card">
+                <div class="card-img">
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    {% else %}
+                        <div class="card-img-placeholder">
+                            {% if item.category == 'land' %}🌍{% elif item.category == 'factory' %}🏭{% elif item.category == 'machinery' %}⚙️{% elif item.category == 'import' %}📦{% elif item.category == 'product' %}🛍️{% else %}🚢{% endif %}
+                        </div>
+                    {% endif %}
+                    <span class="card-badge badge-{{ item.status }}">{{ item.get_status_display }}</span>
+                    {% if item.is_featured %}<span class="badge-vip" data-i18n="badge.vip">⭐ ویژه</span>{% endif %}
+                </div>
+                <div class="card-body">
+                    <div class="card-cat">{{ item.get_category_display }}</div>
+                    <div class="card-title">{{ item.title }}</div>
+                    <div class="card-loc">📍 {{ item.location }}</div>
+                    <div class="card-foot">
+                        <div>
+                            <div class="card-price">{{ item.formatted_price }}</div>
+                            {% if item.price %}<div class="card-price-unit" data-i18n="price.unit">تومان</div>{% endif %}
+                        </div>
+                        {% if item.area %}<div class="card-area">📐 {{ item.area|floatformat:0 }} م²</div>{% endif %}
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty">
+            <div class="empty-icon">🔍</div>
+            <h3 data-i18n="lst.empty.title">آگهی‌ای یافت نشد</h3>
+            <p data-i18n="lst.empty.desc">فیلترها را تغییر دهید یا جستجوی دیگری انجام دهید.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

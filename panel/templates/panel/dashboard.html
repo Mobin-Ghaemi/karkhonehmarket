@@ -1,0 +1,227 @@
+{% extends 'panel/base.html' %}
+
+{% block title %}داشبورد{% endblock %}
+{% block page_title %}داشبورد{% endblock %}
+{% block active_dashboard %}active{% endblock %}
+
+{% block content %}
+<!-- Stat Cards -->
+<div class="stat-grid">
+ <div class="stat-card">
+ <div class="stat-icon blue"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 15c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+ <div class="stat-info">
+ <div class="stat-label">کاربران کل</div>
+ <div class="stat-value">{{ total_users }}</div>
+ <div class="stat-sub">+{{ new_users_today }} کاربر امروز</div>
+ </div>
+ </div>
+ <div class="stat-card">
+ <div class="stat-icon green"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6 4V3a3 3 0 016 0v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+ <div class="stat-info">
+ <div class="stat-label">کل آگهی‌ها</div>
+ <div class="stat-value">{{ total_listings }}</div>
+ <div class="stat-sub">{{ active_listings }} آگهی فعال</div>
+ </div>
+ </div>
+ <div class="stat-card">
+ <div class="stat-icon orange"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l2.09 4.26L16 7.27l-3.5 3.41.83 4.82L9 13.27l-4.33 2.23.83-4.82L2 7.27l4.91-.71L9 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+ <div class="stat-info">
+ <div class="stat-label">آگهی‌های ویژه</div>
+ <div class="stat-value">{{ featured_listings }}</div>
+ <div class="stat-sub">از مجموع {{ total_listings }}</div>
+ </div>
+ </div>
+ <div class="stat-card">
+ <div class="stat-icon purple"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2C5.69 2 3 4.69 3 8c0 2.97 1.61 4.97 3 6h6c1.39-1.03 3-3.03 3-6 0-3.31-2.69-6-6-6z" stroke="currentColor" stroke-width="1.5"/><path d="M6 14v1a3 3 0 006 0v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+ <div class="stat-info">
+ <div class="stat-label">بازدید امروز</div>
+ <div class="stat-value">{{ today_visits }}</div>
+ <div class="stat-sub">{{ today_unique }} بازدید یکتا</div>
+ </div>
+ </div>
+ <div class="stat-card">
+ <div class="stat-icon teal"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 14l4-4 3 3 4-5 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+ <div class="stat-info">
+ <div class="stat-label">بازدید کل</div>
+ <div class="stat-value">{{ total_visits }}</div>
+ <div class="stat-sub">از ابتدای ثبت</div>
+ </div>
+ </div>
+ <div class="stat-card">
+ <div class="stat-icon red"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2v8M9 13v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5"/></svg></div>
+ <div class="stat-info">
+ <div class="stat-label">درخواست مشاوره</div>
+ <div class="stat-value">{{ total_consultations }}</div>
+ <div class="stat-sub">{{ pending_consultations }} در انتظار</div>
+ </div>
+ </div>
+</div>
+
+<!-- Chart + Categories Row -->
+<div class="row" style="margin-bottom: 24px;">
+ <div class="col-7">
+ <div class="card">
+ <div class="card-header">
+ <h3> بازدید ۷ روز گذشته</h3>
+ </div>
+ <div class="card-body">
+ <canvas id="visitChart" height="120"></canvas>
+ </div>
+ </div>
+ </div>
+ <div class="col-5">
+ <div class="card" style="height: 100%;">
+ <div class="card-header">
+ <h3> دسته‌بندی‌ها</h3>
+ <a href="/myadmin/categories/" class="btn btn-outline btn-sm">مدیریت</a>
+ </div>
+ <div class="card-body" style="padding: 12px;">
+ {% for cat in categories %}
+ <div style="display:flex; align-items:center; justify-content:space-between; padding: 10px 10px; border-radius: 8px; margin-bottom: 4px; {% if cat.is_active %}background: #F8FAFC;{% else %}background: #FFF5F5; opacity:0.7;{% endif %}">
+ <div style="display:flex; align-items:center; gap:10px;">
+ <span style="font-size:20px;">{{ cat.icon }}</span>
+ <div>
+ <div style="font-size:13px; font-weight:600; color:#1E293B;">{{ cat.name }}</div>
+ <div style="font-size:11px; color:#94A3B8;">{{ cat.slug }}</div>
+ </div>
+ </div>
+ <span class="badge {% if cat.is_active %}badge-green{% else %}badge-red{% endif %}">{{ cat.listing_count }}</span>
+ </div>
+ {% empty %}
+ <p style="color:#94A3B8; text-align:center; padding:20px; font-size:13px;">هنوز دسته‌بندی ثبت نشده</p>
+ {% endfor %}
+ </div>
+ </div>
+ </div>
+</div>
+
+<!-- Recent Tables Row -->
+<div class="row">
+ <div class="col-6">
+ <div class="card">
+ <div class="card-header">
+ <h3> آخرین آگهی‌ها</h3>
+ <a href="/myadmin/listings/" class="btn btn-outline btn-sm">مشاهده همه</a>
+ </div>
+ <div class="table-wrap">
+ <table>
+ <thead>
+ <tr>
+ <th>عنوان</th>
+ <th>دسته</th>
+ <th>وضعیت</th>
+ </tr>
+ </thead>
+ <tbody>
+ {% for listing in recent_listings %}
+ <tr>
+ <td>
+ <a href="/myadmin/listings/" style="color:#1E293B; text-decoration:none; font-weight:500;">{{ listing.title|truncatechars:30 }}</a>
+ </td>
+ <td><span class="badge badge-blue">{{ listing.get_category_display }}</span></td>
+ <td>
+ {% if listing.is_active %}
+ <span class="badge badge-green">فعال</span>
+ {% else %}
+ <span class="badge badge-red">غیرفعال</span>
+ {% endif %}
+ {% if listing.is_featured %}
+ <span class="badge badge-yellow">ویژه</span>
+ {% endif %}
+ </td>
+ </tr>
+ {% empty %}
+ <tr><td colspan="3" style="text-align:center; color:#94A3B8; padding:20px;">آگهی‌ای ثبت نشده</td></tr>
+ {% endfor %}
+ </tbody>
+ </table>
+ </div>
+ </div>
+ </div>
+ <div class="col-6">
+ <div class="card">
+ <div class="card-header">
+ <h3> آخرین کاربران</h3>
+ <a href="/myadmin/users/" class="btn btn-outline btn-sm">مشاهده همه</a>
+ </div>
+ <div class="table-wrap">
+ <table>
+ <thead>
+ <tr>
+ <th>نام کاربری</th>
+ <th>ایمیل</th>
+ <th>وضعیت</th>
+ </tr>
+ </thead>
+ <tbody>
+ {% for user in recent_users %}
+ <tr>
+ <td>
+ <a href="/myadmin/users/{{ user.pk }}/" style="color:#1E293B; text-decoration:none; font-weight:600;">{{ user.username }}</a>
+ {% if user.is_staff %}<span class="badge badge-purple" style="margin-right:4px;">ادمین</span>{% endif %}
+ </td>
+ <td style="color:#64748B; font-size:12px;">{{ user.email|default:'—' }}</td>
+ <td>
+ {% if user.is_active %}
+ <span class="badge badge-green">فعال</span>
+ {% else %}
+ <span class="badge badge-red">غیرفعال</span>
+ {% endif %}
+ </td>
+ </tr>
+ {% empty %}
+ <tr><td colspan="3" style="text-align:center; color:#94A3B8; padding:20px;">کاربری ثبت نشده</td></tr>
+ {% endfor %}
+ </tbody>
+ </table>
+ </div>
+ </div>
+ </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const ctx = document.getElementById('visitChart').getContext('2d');
+new Chart(ctx, {
+ type: 'line',
+ data: {
+ labels: {{ chart_labels|safe }},
+ datasets: [
+ {
+ label: 'بازدید کل',
+ data: {{ chart_visits|safe }},
+ borderColor: '#3B82F6',
+ backgroundColor: 'rgba(59,130,246,0.08)',
+ tension: 0.4,
+ fill: true,
+ pointBackgroundColor: '#3B82F6',
+ pointRadius: 5,
+ pointHoverRadius: 7,
+ },
+ {
+ label: 'بازدید یکتا',
+ data: {{ chart_unique|safe }},
+ borderColor: '#10B981',
+ backgroundColor: 'rgba(16,185,129,0.06)',
+ tension: 0.4,
+ fill: true,
+ pointBackgroundColor: '#10B981',
+ pointRadius: 5,
+ pointHoverRadius: 7,
+ }
+ ]
+ },
+ options: {
+ responsive: true,
+ plugins: {
+ legend: { position: 'top', labels: { font: { family: 'Vazirmatn', size: 12 } } }
+ },
+ scales: {
+ y: { beginAtZero: true, ticks: { font: { family: 'Vazirmatn' } }, grid: { color: '#F1F5F9' } },
+ x: { ticks: { font: { family: 'Vazirmatn' } }, grid: { display: false } }
+ }
+ }
+});
+</script>
+{% endblock %}

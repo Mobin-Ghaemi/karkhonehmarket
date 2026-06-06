@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360">
+  <defs>
+    <linearGradient id="g5" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a0a00"/>
+      <stop offset="100%" stop-color="#7C2D12"/>
+    </linearGradient>
+    <linearGradient id="sea5" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e3a5f"/>
+      <stop offset="100%" stop-color="#0f2744"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="360" fill="url(#g5)"/>
+  <!-- Sea -->
+  <rect x="0" y="230" width="600" height="130" fill="url(#sea5)"/>
+  <path d="M0,245 Q75,235 150,245 Q225,255 300,245 Q375,235 450,245 Q525,255 600,245" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+  <path d="M0,270 Q100,260 200,270 Q300,280 400,270 Q500,260 600,270" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+  <!-- Plane -->
+  <ellipse cx="300" cy="130" rx="90" ry="22" fill="#C2410C" opacity="0.9"/>
+  <polygon points="300,108 390,130 300,152" fill="#EA580C" opacity="0.8"/>
+  <polygon points="240,118 180,90 240,130" fill="#C2410C" opacity="0.85"/>
+  <polygon points="240,145 180,170 240,130" fill="#C2410C" opacity="0.7"/>
+  <polygon points="360,120 400,105 370,130" fill="#9A3412" opacity="0.7"/>
+  <ellipse cx="255" cy="130" rx="12" ry="10" fill="#7C2D12" opacity="0.6"/>
+  <ellipse cx="220" cy="130" rx="10" ry="8" fill="#7C2D12" opacity="0.5"/>
+  <!-- Up arrow (export) -->
+  <circle cx="460" cy="95" r="26" fill="rgba(234,88,12,0.2)" stroke="#EA580C" stroke-width="2"/>
+  <line x1="460" y1="109" x2="460" y2="79" stroke="#EA580C" stroke-width="3"/>
+  <polygon points="450,87 470,87 460,73" fill="#EA580C"/>
+  <!-- Trail/path dots -->
+  <circle cx="305" cy="75" r="3" fill="#FDBA74" opacity="0.6"/>
+  <circle cx="320" cy="55" r="2.5" fill="#FDBA74" opacity="0.5"/>
+  <circle cx="338" cy="38" r="2" fill="#FDBA74" opacity="0.4"/>
+  <circle cx="358" cy="24" r="1.5" fill="#FDBA74" opacity="0.3"/>
+  <!-- Port/dock -->
+  <rect x="0" y="230" width="120" height="20" fill="#1e2a3a" opacity="0.9"/>
+  <rect x="0" y="215" width="100" height="20" fill="#1e2a3a" opacity="0.7"/>
+  <!-- Boxes waiting to export -->
+  <rect x="15" y="195" width="30" height="22" rx="2" fill="#C2410C" opacity="0.7"/>
+  <rect x="50" y="195" width="30" height="22" rx="2" fill="#EA580C" opacity="0.6"/>
+  <rect x="20" y="176" width="28" height="22" rx="2" fill="#C2410C" opacity="0.5"/>
+  <!-- Stars -->
+  <circle cx="500" cy="30" r="2" fill="white" opacity="0.5"/>
+  <circle cx="540" cy="55" r="1.5" fill="white" opacity="0.4"/>
+  <circle cx="420" cy="20" r="1" fill="white" opacity="0.3"/>
+  <!-- Label -->
+  <rect x="170" y="305" width="260" height="36" rx="18" fill="rgba(0,0,0,0.4)"/>
+  <text x="300" y="328" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="bold" fill="white" opacity="0.95">صادرات</text>
+</svg>

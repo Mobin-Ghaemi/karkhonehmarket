@@ -1,0 +1,78 @@
+{% extends 'accounts/dashboard_base.html' %}
+
+{% block title %}آگهی‌های من{% endblock %}
+{% block page_title %}آگهی‌های من{% endblock %}
+
+{% block content %}
+
+<div class="dash-card">
+    <div class="dash-card-head">
+        <h3>📋 همه آگهی‌های من ({{ listings|length }})</h3>
+        <a href="{% url 'post_listing' %}" class="topbar-btn topbar-btn-primary" style="font-size:0.78rem;padding:7px 14px;border-radius:7px;display:inline-flex;align-items:center;gap:5px;background:var(--blue-500);color:white;font-weight:600;">+ آگهی جدید</a>
+    </div>
+    {% if listings %}
+    <table>
+        <thead>
+            <tr>
+                <th>تصویر</th>
+                <th>عنوان آگهی</th>
+                <th>دسته‌بندی</th>
+                <th>نوع</th>
+                <th>قیمت</th>
+                <th>موقعیت</th>
+                <th>وضعیت</th>
+                <th>تاریخ</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in listings %}
+            <tr>
+                <td>
+                    {% if item.image %}
+                    <img src="{{ item.image.url }}" style="width:52px;height:36px;object-fit:cover;border-radius:6px;">
+                    {% else %}
+                    <div style="width:52px;height:36px;background:var(--blue-50);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">
+                        {% if item.category == 'land' %}🌍{% elif item.category == 'factory' %}🏭{% elif item.category == 'machinery' %}⚙️{% elif item.category == 'import' %}📦{% else %}🚢{% endif %}
+                    </div>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'listing_detail' item.pk %}" class="tbl-title" style="color:var(--blue-600);">{{ item.title|truncatechars:40 }}</a>
+                    {% if item.is_featured %}<span class="pill pill-gold" style="margin-right:5px;font-size:0.62rem;">⭐ ویژه</span>{% endif %}
+                </td>
+                <td>{{ item.get_category_display }}</td>
+                <td>
+                    <span class="pill {% if item.status == 'sale' %}pill-blue{% elif item.status == 'rent' %}pill-green{% else %}pill-purple{% endif %}">
+                        {{ item.get_status_display }}
+                    </span>
+                </td>
+                <td style="font-weight:600;color:var(--blue-700);">{{ item.formatted_price }}</td>
+                <td>{{ item.location }}</td>
+                <td>
+                    <span class="pill {% if item.is_active %}pill-green{% else %}pill-gray{% endif %}">
+                        {% if item.is_active %}فعال{% else %}غیرفعال{% endif %}
+                    </span>
+                </td>
+                <td style="color:var(--gray-400);font-size:0.75rem;">{{ item.created_at|date:"j M Y" }}</td>
+                <td>
+                    <form method="post" action="{% url 'delete_listing' item.pk %}" onsubmit="return confirm('مطمئن هستید؟')">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-danger">حذف</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div style="text-align:center;padding:60px 24px;color:var(--gray-400);">
+        <div style="font-size:3rem;margin-bottom:14px;">📭</div>
+        <h3 style="font-size:1rem;color:var(--gray-700);margin-bottom:8px;">هنوز آگهی‌ای ثبت نکرده‌اید</h3>
+        <p style="font-size:0.83rem;margin-bottom:16px;">اولین آگهی خود را همین الان ثبت کنید.</p>
+        <a href="{% url 'post_listing' %}" style="background:var(--blue-500);color:white;padding:10px 24px;border-radius:9px;font-weight:600;font-size:0.85rem;">+ ثبت اولین آگهی</a>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

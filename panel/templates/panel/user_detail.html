@@ -1,0 +1,169 @@
+{% extends 'panel/base.html' %}
+
+{% block title %}کاربر {{ u.username }}{% endblock %}
+{% block page_title %}جزئیات کاربر{% endblock %}
+{% block active_users %}active{% endblock %}
+
+{% block content %}
+<div style="margin-bottom:20px;">
+ <a href="/myadmin/users/" class="btn btn-outline btn-sm">← بازگشت به کاربران</a>
+</div>
+
+<div class="row">
+ <!-- User Info Card -->
+ <div class="col-5">
+ <div class="card" style="margin-bottom:20px;">
+ <div class="card-header">
+ <h3> اطلاعات کاربر</h3>
+ </div>
+ <div class="card-body">
+ <div style="text-align:center; margin-bottom:24px;">
+ <div style="width:72px; height:72px; border-radius:50%; background:linear-gradient(135deg,#6366F1,#3B82F6); display:flex; align-items:center; justify-content:center; margin:0 auto 12px; color:white; font-size:28px; font-weight:800;">
+ {{ u.username|first|upper }}
+ </div>
+ <h2 style="font-size:18px; font-weight:700; color:#0F172A;">{{ u.get_full_name|default:u.username }}</h2>
+ <p style="color:#64748B; font-size:13px;">{{ u.email|default:'—' }}</p>
+ </div>
+
+ <div style="display:flex; flex-direction:column; gap:12px;">
+ <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #F1F5F9;">
+ <span style="font-size:13px; color:#64748B;">نام کاربری</span>
+ <span style="font-size:13px; font-weight:600;">{{ u.username }}</span>
+ </div>
+ <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #F1F5F9;">
+ <span style="font-size:13px; color:#64748B;">تلفن</span>
+ <span style="font-size:13px; font-weight:600;">{{ profile.phone|default:'—' }}</span>
+ </div>
+ <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #F1F5F9;">
+ <span style="font-size:13px; color:#64748B;">شهر</span>
+ <span style="font-size:13px; font-weight:600;">{{ profile.city|default:'—' }}</span>
+ </div>
+ <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #F1F5F9;">
+ <span style="font-size:13px; color:#64748B;">شرکت</span>
+ <span style="font-size:13px; font-weight:600;">{{ profile.company|default:'—' }}</span>
+ </div>
+ <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #F1F5F9;">
+ <span style="font-size:13px; color:#64748B;">نوع عضویت</span>
+ <span>
+ {% if profile.membership == 'premium' %}<span class="badge badge-purple">ویژه</span>
+ {% elif profile.membership == 'gold' %}<span class="badge badge-yellow">طلایی</span>
+ {% else %}<span class="badge badge-gray">رایگان</span>{% endif %}
+ </span>
+ </div>
+ <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #F1F5F9;">
+ <span style="font-size:13px; color:#64748B;">تأیید شده</span>
+ <span>{% if profile.is_verified %}<span class="badge badge-green"> بله</span>{% else %}<span class="badge badge-gray">خیر</span>{% endif %}</span>
+ </div>
+ <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #F1F5F9;">
+ <span style="font-size:13px; color:#64748B;">وضعیت حساب</span>
+ <span>{% if u.is_active %}<span class="badge badge-green">فعال</span>{% else %}<span class="badge badge-red">غیرفعال</span>{% endif %}</span>
+ </div>
+ <div style="display:flex; justify-content:space-between; padding:10px 0;">
+ <span style="font-size:13px; color:#64748B;">دسترسی ادمین</span>
+ <span>{% if u.is_staff %}<span class="badge badge-purple">بله</span>{% else %}<span class="badge badge-gray">خیر</span>{% endif %}</span>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <!-- Actions -->
+ <div class="card">
+ <div class="card-header"><h3> عملیات</h3></div>
+ <div class="card-body" style="display:flex; flex-direction:column; gap:10px;">
+ <form method="post" class="toggle-form">
+ {% csrf_token %}
+ <input type="hidden" name="action" value="toggle_active">
+ <button type="submit" class="btn {% if u.is_active %}btn-danger{% else %}btn-success{% endif %}" style="width:100%; justify-content:center;">
+ {% if u.is_active %}غیرفعال کردن کاربر{% else %}فعال کردن کاربر{% endif %}
+ </button>
+ </form>
+ <form method="post" class="toggle-form">
+ {% csrf_token %}
+ <input type="hidden" name="action" value="toggle_staff">
+ <button type="submit" class="btn btn-warning" style="width:100%; justify-content:center;">
+ {% if u.is_staff %}حذف دسترسی ادمین{% else %}اعطای دسترسی ادمین{% endif %}
+ </button>
+ </form>
+ <form method="post" class="toggle-form">
+ {% csrf_token %}
+ <input type="hidden" name="action" value="toggle_verified">
+ <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">
+ {% if profile.is_verified %}لغو تأیید{% else %}تأیید کاربر{% endif %}
+ </button>
+ </form>
+ </div>
+ </div>
+ </div>
+
+ <div class="col-7">
+ <!-- User Listings -->
+ <div class="card" style="margin-bottom:20px;">
+ <div class="card-header">
+ <h3> آگهی‌های کاربر ({{ listings|length }})</h3>
+ </div>
+ <div class="table-wrap">
+ <table>
+ <thead>
+ <tr>
+ <th>عنوان</th>
+ <th>دسته</th>
+ <th>وضعیت</th>
+ <th>تاریخ</th>
+ </tr>
+ </thead>
+ <tbody>
+ {% for listing in listings %}
+ <tr>
+ <td style="font-weight:600;">{{ listing.title|truncatechars:35 }}</td>
+ <td><span class="badge badge-blue">{{ listing.get_category_display }}</span></td>
+ <td>
+ {% if listing.is_active %}<span class="badge badge-green">فعال</span>{% else %}<span class="badge badge-red">غیرفعال</span>{% endif %}
+ {% if listing.is_featured %}<span class="badge badge-yellow">ویژه</span>{% endif %}
+ </td>
+ <td style="font-size:12px; color:#64748B;">{{ listing.created_at|date:"Y/m/d" }}</td>
+ </tr>
+ {% empty %}
+ <tr><td colspan="4" style="text-align:center; color:#94A3B8; padding:20px;">آگهی‌ای ثبت نشده</td></tr>
+ {% endfor %}
+ </tbody>
+ </table>
+ </div>
+ </div>
+
+ <!-- Consultations -->
+ <div class="card">
+ <div class="card-header">
+ <h3> درخواست‌های مشاوره ({{ consultations|length }})</h3>
+ </div>
+ <div class="table-wrap">
+ <table>
+ <thead>
+ <tr>
+ <th>نام</th>
+ <th>موضوع</th>
+ <th>وضعیت</th>
+ <th>تاریخ</th>
+ </tr>
+ </thead>
+ <tbody>
+ {% for c in consultations %}
+ <tr>
+ <td style="font-weight:600;">{{ c.full_name }}</td>
+ <td style="font-size:12px;">{{ c.get_subject_display }}</td>
+ <td>
+ {% if c.status == 'pending' %}<span class="badge badge-yellow">در انتظار</span>
+ {% elif c.status == 'contacted' %}<span class="badge badge-blue">تماس گرفته شد</span>
+ {% else %}<span class="badge badge-green">انجام شد</span>{% endif %}
+ </td>
+ <td style="font-size:12px; color:#64748B;">{{ c.created_at|date:"Y/m/d" }}</td>
+ </tr>
+ {% empty %}
+ <tr><td colspan="4" style="text-align:center; color:#94A3B8; padding:20px;">درخواستی ثبت نشده</td></tr>
+ {% endfor %}
+ </tbody>
+ </table>
+ </div>
+ </div>
+ </div>
+</div>
+{% endblock %}

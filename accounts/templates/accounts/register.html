@@ -1,0 +1,68 @@
+{% extends 'accounts/dashboard_base.html' %}
+
+{% block body %}
+<div class="auth-wrap">
+    <div class="auth-card" style="max-width:540px;">
+        <div class="auth-logo">
+            <div class="auth-logo-icon">🏭</div>
+            <div class="auth-logo-text">کارخونه مارکت</div>
+        </div>
+        <h2 class="auth-title">ثبت‌نام رایگان</h2>
+        <p class="auth-sub">حساب کاربری خود را بسازید</p>
+
+        {% if form.errors %}
+        <div class="alert alert-error">
+            ❌
+            {% for field in form %}{% for err in field.errors %}{{ err }} {% endfor %}{% endfor %}
+            {% for err in form.non_field_errors %}{{ err }}{% endfor %}
+        </div>
+        {% endif %}
+
+        <form class="auth-form" method="post">
+            {% csrf_token %}
+            <div class="form-row-2">
+                <div class="auth-input-group">
+                    <label>نام</label>
+                    <input type="text" name="first_name" placeholder="نام" value="{{ form.first_name.value|default:'' }}">
+                </div>
+                <div class="auth-input-group">
+                    <label>نام خانوادگی</label>
+                    <input type="text" name="last_name" placeholder="نام خانوادگی" value="{{ form.last_name.value|default:'' }}">
+                </div>
+            </div>
+            <div class="auth-input-group">
+                <label>نام کاربری</label>
+                <input type="text" name="username" placeholder="username (فارسی نباشد)" value="{{ form.username.value|default:'' }}">
+            </div>
+            <div class="form-row-2">
+                <div class="auth-input-group">
+                    <label>ایمیل</label>
+                    <input type="email" name="email" placeholder="email@example.com" value="{{ form.email.value|default:'' }}">
+                </div>
+                <div class="auth-input-group">
+                    <label>تلفن همراه</label>
+                    <input type="text" name="phone" placeholder="09..." value="{{ form.phone.value|default:'' }}">
+                </div>
+            </div>
+            <div class="form-row-2">
+                <div class="auth-input-group">
+                    <label>رمز عبور</label>
+                    <input type="password" name="password" placeholder="حداقل ۸ کاراکتر">
+                </div>
+                <div class="auth-input-group">
+                    <label>تکرار رمز</label>
+                    <input type="password" name="password2" placeholder="••••••••">
+                </div>
+            </div>
+            <div style="font-size:0.74rem;color:var(--gray-400);background:var(--gray-50);padding:10px 12px;border-radius:8px;border:1px solid var(--gray-200);">
+                ✅ با ثبت‌نام، <a href="#" style="color:var(--blue-500);">قوانین و مقررات</a> را پذیرفته‌اید.
+            </div>
+            <button type="submit" class="auth-btn">ساختن حساب رایگان</button>
+        </form>
+
+        <div class="auth-footer">
+            حساب دارید؟ <a href="{% url 'login' %}">وارد شوید</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

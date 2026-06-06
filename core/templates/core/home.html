@@ -1,0 +1,219 @@
+{% extends 'core/base.html' %}
+
+{% block title %}کارخونه مارکت | بزرگترین مارکت صنعتی ایران{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-bg-circle hero-bg-circle-1"></div>
+    <div class="hero-bg-circle hero-bg-circle-2"></div>
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-eyebrow" data-i18n="home.eyebrow">🔥 بیش از ۱۰,۰۰۰ آگهی فعال در سراسر ایران</div>
+            <h1><span data-i18n="home.h1a">بزرگترین پلتفرم</span><br><em data-i18n="home.h1b">مارکت صنعتی ایران</em></h1>
+            <p class="hero-sub" data-i18n="home.sub">خرید، فروش و اجاره زمین صنعتی، کارخانه، ماشین‌آلات، واردات و صادرات — همه در یک جا</p>
+            <div class="search-wrap">
+                <form class="search-box" action="{% url 'listings' %}" method="get">
+                    <input type="text" name="q" data-i18n-placeholder="home.search.ph" placeholder="جستجو در آگهی‌ها... (کارخانه، زمین، دستگاه)">
+                    <div class="search-divider"></div>
+                    <select name="category">
+                        <option value="" data-i18n="home.search.all">همه دسته‌ها</option>
+                        <option value="land" data-i18n="home.search.land">زمین صنعتی</option>
+                        <option value="factory" data-i18n="home.search.factory">کارخانه</option>
+                        <option value="machinery" data-i18n="home.search.machinery">ماشین‌آلات</option>
+                        <option value="import" data-i18n="home.search.import">واردات</option>
+                        <option value="export" data-i18n="home.search.export">صادرات</option>
+                        <option value="product" data-i18n="home.search.product">محصولات</option>
+                    </select>
+                    <button type="submit" class="search-btn" data-i18n="home.search.btn">🔍 جستجو</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="stats-strip">
+    <div class="container">
+        <div class="stat-item">
+            <div class="stat-num">{{ stats.land }}</div>
+            <div class="stat-label" data-i18n="stat.land">🌍 زمین صنعتی</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">{{ stats.factory }}</div>
+            <div class="stat-label" data-i18n="stat.factory">🏭 کارخانه</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">{{ stats.machinery }}</div>
+            <div class="stat-label" data-i18n="stat.machinery">⚙️ ماشین‌آلات</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">{{ stats.import }}</div>
+            <div class="stat-label" data-i18n="stat.import">📦 واردکننده</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">{{ stats.export }}</div>
+            <div class="stat-label" data-i18n="stat.export">🚢 صادرکننده</div>
+        </div>
+    </div>
+</div>
+
+<section class="section section-alt">
+    <div class="container">
+        <div class="section-head">
+            <h2 class="section-title">
+                <span class="section-title-bar"></span>
+                <span data-i18n="home.sec.cats">دسته‌بندی خدمات</span>
+            </h2>
+            <a href="{% url 'listings' %}" class="see-all" data-i18n="home.see_all">مشاهده همه ←</a>
+        </div>
+        <div class="cat-grid">
+            <a href="{% url 'category' 'land' %}" class="cat-card">
+                <span class="cat-emoji">🌍</span>
+                <div class="cat-name" data-i18n="cat.land">زمین صنعتی</div>
+                <div class="cat-count"><span>{{ stats.land }}</span> <span data-i18n="cat.unit">آگهی</span></div>
+            </a>
+            <a href="{% url 'category' 'factory' %}" class="cat-card">
+                <span class="cat-emoji">🏭</span>
+                <div class="cat-name" data-i18n="cat.factory">کارخانه</div>
+                <div class="cat-count"><span>{{ stats.factory }}</span> <span data-i18n="cat.unit">آگهی</span></div>
+            </a>
+            <a href="{% url 'category' 'machinery' %}" class="cat-card">
+                <span class="cat-emoji">⚙️</span>
+                <div class="cat-name" data-i18n="cat.machinery">ماشین‌آلات</div>
+                <div class="cat-count"><span>{{ stats.machinery }}</span> <span data-i18n="cat.unit">آگهی</span></div>
+            </a>
+            <a href="{% url 'category' 'import' %}" class="cat-card">
+                <span class="cat-emoji">📦</span>
+                <div class="cat-name" data-i18n="cat.import">واردات</div>
+                <div class="cat-count"><span>{{ stats.import }}</span> <span data-i18n="cat.unit">آگهی</span></div>
+            </a>
+            <a href="{% url 'category' 'export' %}" class="cat-card">
+                <span class="cat-emoji">🚢</span>
+                <div class="cat-name" data-i18n="cat.export">صادرات</div>
+                <div class="cat-count"><span>{{ stats.export }}</span> <span data-i18n="cat.unit">آگهی</span></div>
+            </a>
+            <a href="{% url 'category' 'product' %}" class="cat-card cat-card-all">
+                <span class="cat-emoji">🛍️</span>
+                <div class="cat-name" data-i18n="cat.product">محصولات</div>
+                <div class="cat-count"><span>{{ stats.product }}</span> <span data-i18n="cat.unit">آگهی</span></div>
+            </a>
+        </div>
+    </div>
+</section>
+
+{% if featured %}
+<section class="section">
+    <div class="container">
+        <div class="section-head">
+            <h2 class="section-title">
+                <span class="section-title-bar"></span>
+                <span data-i18n="home.sec.featured">آگهی‌های ویژه</span>
+            </h2>
+            <a href="{% url 'listings' %}" class="see-all" data-i18n="home.see_all">مشاهده همه ←</a>
+        </div>
+        <div class="listings-grid">
+            {% for item in featured %}
+            <a href="{% url 'listing_detail' item.pk %}" class="listing-card">
+                <div class="card-img">
+                    {% if item.image %}<img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    {% else %}<div class="card-img-placeholder">{% if item.category == 'land' %}🌍{% elif item.category == 'factory' %}🏭{% elif item.category == 'machinery' %}⚙️{% elif item.category == 'import' %}📦{% elif item.category == 'product' %}🛍️{% else %}🚢{% endif %}</div>{% endif %}
+                    <span class="card-badge badge-{{ item.status }}">{{ item.get_status_display }}</span>
+                    <span class="badge-vip" data-i18n="badge.vip">ویژه</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-cat">{{ item.get_category_display }}</div>
+                    <div class="card-title">{{ item.title }}</div>
+                    <div class="card-loc">📍 {{ item.location }}</div>
+                    <div class="card-foot">
+                        <div>
+                            <div class="card-price">{{ item.formatted_price }}</div>
+                            {% if item.price %}<div class="card-price-unit" data-i18n="price.unit">تومان</div>{% endif %}
+                        </div>
+                        {% if item.area %}<div class="card-area">📐 {{ item.area|floatformat:0 }} م²</div>{% endif %}
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="section section-alt">
+    <div class="container">
+        <div class="section-head">
+            <h2 class="section-title">
+                <span class="section-title-bar"></span>
+                <span data-i18n="home.sec.recent">جدیدترین آگهی‌ها</span>
+            </h2>
+            <a href="{% url 'listings' %}" class="see-all" data-i18n="home.see_all">مشاهده همه ←</a>
+        </div>
+        {% if recent %}
+        <div class="listings-grid">
+            {% for item in recent %}
+            <a href="{% url 'listing_detail' item.pk %}" class="listing-card">
+                <div class="card-img">
+                    {% if item.image %}<img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    {% else %}<div class="card-img-placeholder">{% if item.category == 'land' %}🌍{% elif item.category == 'factory' %}🏭{% elif item.category == 'machinery' %}⚙️{% elif item.category == 'import' %}📦{% elif item.category == 'product' %}🛍️{% else %}🚢{% endif %}</div>{% endif %}
+                    <span class="card-badge badge-{{ item.status }}">{{ item.get_status_display }}</span>
+                    {% if item.is_featured %}<span class="badge-vip" data-i18n="badge.vip">ویژه</span>{% endif %}
+                </div>
+                <div class="card-body">
+                    <div class="card-cat">{{ item.get_category_display }}</div>
+                    <div class="card-title">{{ item.title }}</div>
+                    <div class="card-loc">📍 {{ item.location }}</div>
+                    <div class="card-foot">
+                        <div>
+                            <div class="card-price">{{ item.formatted_price }}</div>
+                            {% if item.price %}<div class="card-price-unit" data-i18n="price.unit">تومان</div>{% endif %}
+                        </div>
+                        {% if item.area %}<div class="card-area">📐 {{ item.area|floatformat:0 }} م²</div>{% endif %}
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty">
+            <div class="empty-icon">📋</div>
+            <h3 data-i18n="home.empty.title">هنوز آگهی‌ای ثبت نشده</h3>
+            <p data-i18n="home.empty.desc">اولین آگهی را از پنل ادمین ثبت کنید.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-head">
+            <h2 class="section-title">
+                <span class="section-title-bar"></span>
+                <span data-i18n="home.sec.why">چرا کارخونه مارکت؟</span>
+            </h2>
+        </div>
+        <div class="why-grid">
+            <div class="why-card">
+                <div class="why-icon">🔒</div>
+                <h3 data-i18n="why.1.title">معاملات مطمئن</h3>
+                <p data-i18n="why.1.desc">تمامی آگهی‌ها تأییدشده و معتبر هستند.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">⚡</div>
+                <h3 data-i18n="why.2.title">ثبت سریع</h3>
+                <p data-i18n="why.2.desc">آگهی خود را در کمتر از ۵ دقیقه ثبت کنید.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">🌐</div>
+                <h3 data-i18n="why.3.title">پوشش سراسری</h3>
+                <p data-i18n="why.3.desc">آگهی‌ها از سراسر ایران در یک پلتفرم.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">💬</div>
+                <h3 data-i18n="why.4.title">پشتیبانی ۲۴/۷</h3>
+                <p data-i18n="why.4.desc">تیم پشتیبانی آماده پاسخگویی است.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

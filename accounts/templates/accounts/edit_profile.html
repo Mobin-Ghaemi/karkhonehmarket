@@ -1,0 +1,71 @@
+{% extends 'accounts/dashboard_base.html' %}
+
+{% block title %}ویرایش پروفایل{% endblock %}
+{% block page_title %}ویرایش پروفایل{% endblock %}
+
+{% block content %}
+<div style="max-width:680px;">
+    <div class="dash-card">
+        <div class="dash-card-head"><h3>👤 اطلاعات شخصی</h3></div>
+        <div style="padding:24px;">
+
+            <div class="avatar-wrap">
+                <div class="avatar-big">
+                    {% if profile.avatar %}
+                        <img src="{{ profile.avatar.url }}" alt="">
+                    {% else %}
+                        {{ request.user.first_name|first|upper }}{{ request.user.last_name|first|upper }}
+                    {% endif %}
+                </div>
+                <div>
+                    <div style="font-weight:700;font-size:0.9rem;color:var(--gray-900);">{{ request.user.get_full_name|default:request.user.username }}</div>
+                    <div style="font-size:0.75rem;color:var(--gray-400);margin-bottom:8px;">@{{ request.user.username }}</div>
+                    <div class="membership-badge badge-{{ profile.membership }}" style="display:inline-flex;">
+                        {% if profile.membership == 'gold' %}⭐{% elif profile.membership == 'premium' %}💎{% else %}🆓{% endif %}
+                        {{ profile.get_membership_display }}
+                    </div>
+                </div>
+            </div>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-grid" style="margin-bottom:20px;">
+                    <div class="form-group">
+                        <label>نام</label>
+                        <input type="text" name="first_name" value="{{ request.user.first_name }}">
+                    </div>
+                    <div class="form-group">
+                        <label>نام خانوادگی</label>
+                        <input type="text" name="last_name" value="{{ request.user.last_name }}">
+                    </div>
+                    <div class="form-group">
+                        <label>ایمیل</label>
+                        <input type="email" name="email" value="{{ request.user.email }}">
+                    </div>
+                    <div class="form-group">
+                        <label>تلفن همراه</label>
+                        <input type="text" name="phone" value="{{ profile.phone }}">
+                    </div>
+                    <div class="form-group">
+                        <label>شرکت / سازمان</label>
+                        <input type="text" name="company" value="{{ profile.company }}">
+                    </div>
+                    <div class="form-group">
+                        <label>شهر</label>
+                        <input type="text" name="city" value="{{ profile.city }}">
+                    </div>
+                    <div class="form-group" style="grid-column:1/-1;">
+                        <label>معرفی کوتاه</label>
+                        <textarea name="bio" rows="3" placeholder="درباره خودتان یا شرکت‌تان بنویسید...">{{ profile.bio }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>تصویر پروفایل</label>
+                        <input type="file" name="avatar" accept="image/*" style="padding:8px;">
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">💾 ذخیره تغییرات</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
