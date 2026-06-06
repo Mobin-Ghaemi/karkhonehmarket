@@ -146,110 +146,152 @@
 
         /* ========== NAVBAR ========== */
         .navbar {
-            background: var(--white);
-            border-bottom: 1px solid var(--gray-200);
-            position: sticky;
+            background: transparent;
+            border-bottom: 1px solid transparent;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 999;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            transition: background 0.4s, border-color 0.4s, box-shadow 0.4s;
+        }
+        .navbar.scrolled {
+            background: rgba(10,22,42,0.97);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.25);
         }
 
         .navbar-inner {
             display: flex;
             align-items: center;
-            height: 68px;
-            gap: 0;
-            direction: ltr;
+            height: 64px;
+            direction: rtl;
         }
 
+        /* لوگو — سمت راست در RTL */
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding-left: 28px;
-            margin-left: 4px;
             flex-shrink: 0;
+            text-decoration: none;
+            margin-right: 0;
+            padding-right: 0;
         }
 
         .logo-mark {
             width: 38px;
             height: 38px;
-            background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+            background: linear-gradient(135deg, #2563EB, #1e40af);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.15rem;
             flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(32,129,226,0.3);
         }
 
-        .logo-text { line-height: 1.2; }
+        .logo-text { line-height: 1.15; text-align: right; }
 
         .logo-text strong {
             display: block;
-            font-size: 0.97rem;
+            font-size: 1rem;
             font-weight: 800;
-            color: var(--gray-900);
+            color: white;
+            letter-spacing: -0.3px;
         }
 
         .logo-text span {
-            font-size: 0.67rem;
-            color: var(--gray-400);
-            font-weight: 400;
+            font-size: 0.62rem;
+            color: rgba(255,255,255,0.38);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
-        /* NAV DIVIDER */
+        /* جداکننده */
         .nav-divider {
             width: 1px;
-            height: 28px;
-            background: var(--gray-200);
-            margin: 0 8px 0 4px;
+            height: 24px;
+            background: rgba(255,255,255,0.12);
+            margin: 0 16px;
             flex-shrink: 0;
         }
 
-        /* NAV TABS */
+        /* لینک‌های ناوبار */
         .nav-menu {
             display: flex;
             list-style: none;
-            height: 68px;
+            height: 64px;
             flex: 1;
-            padding: 0 4px;
+            justify-content: center;
+            gap: 2px;
+            direction: rtl;
         }
 
-        .nav-menu li { height: 100%; }
+        .nav-menu li { height: 100%; display: flex; align-items: center; }
 
         .nav-menu li a {
             display: flex;
             align-items: center;
-            gap: 5px;
             height: 100%;
-            padding: 0 11px;
-            font-size: 0.8rem;
+            padding: 0 13px;
+            font-size: 0.82rem;
             font-weight: 500;
-            color: var(--gray-500);
+            color: rgba(255,255,255,0.65);
             border-bottom: 2px solid transparent;
-            transition: all 0.15s;
+            transition: color 0.15s, background 0.15s;
             white-space: nowrap;
+            letter-spacing: 0.1px;
         }
 
-        .nav-menu li a .nav-icon { font-size: 0.85rem; }
-
-        .nav-menu li a:hover { color: var(--blue-600); background: var(--blue-50); }
+        .nav-menu li a:hover {
+            color: white;
+            background: rgba(255,255,255,0.07);
+            border-radius: 6px;
+        }
 
         .nav-menu li a.active {
-            color: var(--blue-600);
-            border-bottom-color: var(--blue-500);
+            color: white;
             font-weight: 600;
+            border-bottom-color: #2563EB;
         }
 
+        /* دکمه‌های سمت چپ */
         .nav-end {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding-left: 8px;
+            gap: 10px;
             flex-shrink: 0;
         }
+
+        .nav-login-btn {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.83rem;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 7px;
+            transition: color 0.15s, background 0.15s;
+            text-decoration: none;
+        }
+        .nav-login-btn:hover { color: white; background: rgba(255,255,255,0.08); }
+
+        .nav-post-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #2563EB;
+            color: white;
+            font-size: 0.83rem;
+            font-weight: 700;
+            padding: 8px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+            white-space: nowrap;
+        }
+        .nav-post-btn:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(37,99,235,0.45); }
 
         /* User button in nav */
         .nav-user-btn {
@@ -320,14 +362,14 @@
 
         .btn-ghost {
             background: transparent;
-            color: var(--gray-600);
-            border: 1.5px solid var(--gray-200);
+            color: rgba(255,255,255,0.85);
+            border: 1.5px solid rgba(255,255,255,0.3);
         }
 
         .btn-ghost:hover {
-            border-color: var(--blue-400);
-            color: var(--blue-600);
-            background: var(--blue-50);
+            border-color: rgba(255,255,255,0.7);
+            color: white;
+            background: rgba(255,255,255,0.1);
         }
 
         /* ========== CONTAINER ========== */
@@ -491,13 +533,13 @@
         .stat-num {
             font-size: 1.7rem;
             font-weight: 800;
-            color: var(--blue-600);
+            color: white;
             line-height: 1;
         }
 
         .stat-label {
             font-size: 0.74rem;
-            color: var(--gray-400);
+            color: rgba(255,255,255,0.5);
             margin-top: 3px;
         }
 
@@ -746,7 +788,7 @@
         /* ========== PAGE HEADER ========== */
         .page-header {
             background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 100%);
-            padding: 40px 0 36px;
+            padding: 104px 0 36px;
             position: relative;
             overflow: hidden;
         }
@@ -1208,39 +1250,91 @@
             .why-grid { grid-template-columns: 1fr 1fr; }
             .topbar-info { display: none; }
         }
+        /* ========== HERO PHOTO BG ========== */
+        .hero-bg {
+            position: relative; overflow: hidden;
+            min-height: 100vh; display: flex; align-items: center;
+        }
+        .hero-bg__img {
+            position: absolute; inset: 0; z-index: 0;
+            background: url('https://images.unsplash.com/photo-1513828583688-c52646db42da?w=1920&q=80') center/cover no-repeat;
+        }
+        .hero-bg__overlay {
+            position: absolute; inset: 0; z-index: 1;
+            background: linear-gradient(105deg, rgba(4,14,30,0.93) 0%, rgba(10,22,48,0.82) 55%, rgba(6,16,36,0.72) 100%);
+        }
+        .hero-content { position: relative; z-index: 2; width: 100%; }
+
+        /* ========== SEARCH CARD ========== */
+        .search-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.13);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+        }
+        .search-tab {
+            padding: 9px 22px; border-radius: 10px; font-size: 14px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; color: rgba(255,255,255,0.55); border: none; background: transparent;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .search-tab.active { background: white; color: #123B6A; box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
+        .search-select {
+            border: 1.5px solid rgba(255,255,255,0.14); border-radius: 12px; padding: 13px 16px;
+            font-size: 14px; font-weight: 500;
+            background: rgba(255,255,255,0.08); color: white;
+            outline: none; transition: all 0.2s; cursor: pointer; width: 100%;
+            appearance: none; font-family: 'Vazirmatn', sans-serif;
+        }
+        .search-select option { background: #0d2035; color: white; }
+        .search-select:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.18); }
+        .hero-search-btn {
+            background: #2563EB; color: white; border: none; border-radius: 12px;
+            padding: 15px; font-size: 15px; font-weight: 700; cursor: pointer;
+            transition: all 0.2s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .hero-search-btn:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 8px 28px rgba(37,99,235,0.5); }
+        .search-hot-tag {
+            font-size: 11px; color: rgba(255,255,255,0.55);
+            background: rgba(255,255,255,0.06); padding: 4px 10px; border-radius: 6px;
+            text-decoration: none; font-weight: 600; border: 1px solid rgba(255,255,255,0.1);
+            transition: background 0.2s;
+        }
+        .search-hot-tag:hover { background: rgba(255,255,255,0.12); color: white; }
+
+        /* ========== HERO ANIMATIONS ========== */
+        @keyframes fadeUp { from { opacity:0; transform:translateY(32px); } to { opacity:1; transform:none; } }
+        .h-anim { animation: fadeUp 0.8s ease forwards; opacity: 0; }
+        .h-d1 { animation-delay: 0.1s; }
+        .h-d2 { animation-delay: 0.25s; }
+        .h-d3 { animation-delay: 0.45s; }
+        .h-d4 { animation-delay: 0.65s; }
+        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);} }
+        .dot-pulse { width:6px;height:6px;background:#2563EB;border-radius:50%;display:inline-block;animation:pulse 2s infinite; }
+
+        @media (max-width: 768px) {
+            .hero-grid { grid-template-columns: 1fr !important; }
+            .hero-proof { flex-wrap: wrap; }
+        }
+
     </style>
 {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-<div class="topbar">
-    <div class="container">
-        <div class="topbar-info">
-            <span>📞 ۰۲۱-۱۲۳۴۵۶۷۸</span>
-            <span>📧 info@karkhonehmarket.ir</span>
-        </div>
-        <div class="lang-switcher">
-            <button class="lang-btn active" data-lang="fa">🇮🇷 FA</button>
-            <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
-            <button class="lang-btn" data-lang="ar">🇸🇦 AR</button>
-        </div>
-        <div style="display:flex;gap:14px;align-items:center;">
-            {% if user.is_authenticated %}
-                <span style="color:rgba(255,255,255,0.45);font-size:0.73rem;">خوش آمدید، <strong style="color:rgba(255,255,255,0.75);">{{ user.first_name|default:user.username }}</strong></span>
-                <a href="{% url 'logout' %}" style="color:rgba(255,255,255,0.45);font-size:0.73rem;transition:color 0.15s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">خروج</a>
-            {% else %}
-                <a href="{% url 'login' %}" style="color:rgba(255,255,255,0.55);font-size:0.73rem;transition:color 0.15s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">ورود</a>
-                <a href="{% url 'register' %}" style="color:rgba(255,255,255,0.55);font-size:0.73rem;transition:color 0.15s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">ثبت‌نام</a>
-            {% endif %}
-        </div>
-    </div>
-</div>
-
-<nav class="navbar">
+<nav class="navbar" id="mainNav">
     <div class="container">
         <div class="navbar-inner">
+
+            <!-- لوگو -->
             <a href="{% url 'home' %}" class="logo">
-                <div class="logo-mark">🏭</div>
+                <div class="logo-mark">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+                    </svg>
+                </div>
                 <div class="logo-text">
                     <strong>کارخونه مارکت</strong>
                     <span>مارکت صنعتی ایران</span>
@@ -1249,35 +1343,34 @@
 
             <div class="nav-divider"></div>
 
+            <!-- منوی اصلی -->
             <ul class="nav-menu">
-                <li><a href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}><span class="nav-icon">🏠</span> خانه</a></li>
-                <li><a href="{% url 'category' 'land' %}" {% if request.resolver_match.kwargs.category == 'land' %}class="active"{% endif %}><span class="nav-icon">🌍</span> زمین صنعتی</a></li>
-                <li><a href="{% url 'category' 'factory' %}" {% if request.resolver_match.kwargs.category == 'factory' %}class="active"{% endif %}><span class="nav-icon">🏭</span> کارخانه</a></li>
-                <li><a href="{% url 'category' 'machinery' %}" {% if request.resolver_match.kwargs.category == 'machinery' %}class="active"{% endif %}><span class="nav-icon">⚙️</span> ماشین‌آلات</a></li>
-                <li><a href="{% url 'category' 'import' %}" {% if request.resolver_match.kwargs.category == 'import' %}class="active"{% endif %}><span class="nav-icon">📦</span> واردات</a></li>
-                <li><a href="{% url 'category' 'export' %}" {% if request.resolver_match.kwargs.category == 'export' %}class="active"{% endif %}><span class="nav-icon">🚢</span> صادرات</a></li>
-                <li><a href="{% url 'products' %}" {% if request.resolver_match.url_name == 'products' %}class="active"{% endif %}><span class="nav-icon">🏪</span> محصولات</a></li>
-                <li><a href="{% url 'listings' %}" {% if request.resolver_match.url_name == 'listings' %}class="active"{% endif %}><span class="nav-icon">📋</span> همه آگهی‌ها</a></li>
+                <li><a href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}>صفحه اول</a></li>
+                <li><a href="{% url 'category' 'land' %}" {% if request.resolver_match.kwargs.category == 'land' %}class="active"{% endif %}>زمین صنعتی</a></li>
+                <li><a href="{% url 'category' 'factory' %}" {% if request.resolver_match.kwargs.category == 'factory' %}class="active"{% endif %}>کارخانه</a></li>
+                <li><a href="{% url 'category' 'machinery' %}" {% if request.resolver_match.kwargs.category == 'machinery' %}class="active"{% endif %}>ماشین‌آلات</a></li>
+                <li><a href="{% url 'category' 'import' %}" {% if request.resolver_match.kwargs.category == 'import' %}class="active"{% endif %}>واردات</a></li>
+                <li><a href="{% url 'category' 'export' %}" {% if request.resolver_match.kwargs.category == 'export' %}class="active"{% endif %}>صادرات</a></li>
+                <li><a href="{% url 'listings' %}" {% if request.resolver_match.url_name == 'listings' %}class="active"{% endif %}>همه آگهی‌ها</a></li>
             </ul>
 
+            <!-- دکمه‌های سمت چپ -->
             <div class="nav-end">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'dashboard' %}" class="btn btn-ghost">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="4.5" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M2 12c0-2.21 2.239-4 5-4s5 1.79 5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                        حساب کاربری
-                    </a>
-                    <a href="{% url 'post_listing' %}" class="btn btn-primary">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
-                        ثبت آگهی
+                    <a href="{% url 'dashboard' %}" class="nav-login-btn">حساب کاربری</a>
+                    <a href="{% url 'post_listing' %}" class="nav-post-btn">
+                        <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="white" stroke-width="2.2" stroke-linecap="round"/></svg>
+                        درج آگهی
                     </a>
                 {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-ghost">ورود</a>
-                    <a href="{% url 'register' %}" class="btn btn-primary">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
-                        ثبت‌نام رایگان
+                    <a href="{% url 'login' %}" class="nav-login-btn">ورود</a>
+                    <a href="{% url 'register' %}" class="nav-post-btn">
+                        <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="white" stroke-width="2.2" stroke-linecap="round"/></svg>
+                        درج آگهی رایگان
                     </a>
                 {% endif %}
             </div>
+
         </div>
     </div>
 </nav>
@@ -1289,7 +1382,7 @@
         <div class="footer-grid">
             <div class="footer-brand">
                 <div style="display:flex;align-items:center;gap:10px;">
-                    <div class="logo-mark">🏭</div>
+                    <div class="logo-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg></div>
                     <div class="logo-text">
                         <strong data-i18n="logo.name" style="color:rgba(255,255,255,0.9);font-size:1rem;">کارخونه مارکت</strong>
                         <span data-i18n="logo.subtitle">مارکت صنعتی ایران</span>
@@ -1331,6 +1424,18 @@
 </footer>
 
 {% block extra_js %}{% endblock %}
+<script>
+(function() {
+    var nav = document.getElementById('mainNav');
+    if (!nav) return;
+    function onScroll() {
+        if (window.scrollY > 20) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+})();
+</script>
 <script>
 (function () {
     var T = {

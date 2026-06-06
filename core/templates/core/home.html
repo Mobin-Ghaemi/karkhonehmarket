@@ -4,55 +4,148 @@
 
 {% block content %}
 
-<section class="hero">
-    <div class="hero-bg-circle hero-bg-circle-1"></div>
-    <div class="hero-bg-circle hero-bg-circle-2"></div>
-    <div class="container">
-        <div class="hero-content">
-            <div class="hero-eyebrow" data-i18n="home.eyebrow">🔥 بیش از ۱۰,۰۰۰ آگهی فعال در سراسر ایران</div>
-            <h1><span data-i18n="home.h1a">بزرگترین پلتفرم</span><br><em data-i18n="home.h1b">مارکت صنعتی ایران</em></h1>
-            <p class="hero-sub" data-i18n="home.sub">خرید، فروش و اجاره زمین صنعتی، کارخانه، ماشین‌آلات، واردات و صادرات — همه در یک جا</p>
-            <div class="search-wrap">
-                <form class="search-box" action="{% url 'listings' %}" method="get">
-                    <input type="text" name="q" data-i18n-placeholder="home.search.ph" placeholder="جستجو در آگهی‌ها... (کارخانه، زمین، دستگاه)">
-                    <div class="search-divider"></div>
-                    <select name="category">
-                        <option value="" data-i18n="home.search.all">همه دسته‌ها</option>
-                        <option value="land" data-i18n="home.search.land">زمین صنعتی</option>
-                        <option value="factory" data-i18n="home.search.factory">کارخانه</option>
-                        <option value="machinery" data-i18n="home.search.machinery">ماشین‌آلات</option>
-                        <option value="import" data-i18n="home.search.import">واردات</option>
-                        <option value="export" data-i18n="home.search.export">صادرات</option>
-                        <option value="product" data-i18n="home.search.product">محصولات</option>
-                    </select>
-                    <button type="submit" class="search-btn" data-i18n="home.search.btn">🔍 جستجو</button>
-                </form>
+<section class="hero-bg">
+    <div class="hero-bg__img"></div>
+    <div class="hero-bg__overlay"></div>
+
+    <div class="hero-content">
+        <div class="container">
+            <div class="hero-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:96px 0 72px;direction:rtl;">
+
+                <!-- ستون متن -->
+                <div style="text-align:right;">
+                    <div class="h-anim h-d1" style="margin-bottom:24px;">
+                        <span style="display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,0.15);border:1px solid rgba(37,99,235,0.35);color:#93c5fd;padding:6px 16px;border-radius:6px;font-size:12px;font-weight:700;">
+                            <span class="dot-pulse"></span>
+                            بزرگترین مرجع معاملات صنعتی ایران
+                        </span>
+                    </div>
+
+                    <h1 class="h-anim h-d2" style="color:white;font-size:clamp(28px,3.5vw,52px);font-weight:900;line-height:1.25;letter-spacing:-0.5px;margin-bottom:20px;">
+                        خرید، فروش و اجاره<br>
+                        <span style="background:linear-gradient(90deg,#60a5fa,#a5f3fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">کارخانه و ملک صنعتی</span><br>
+                        در سراسر ایران
+                    </h1>
+
+                    <p class="h-anim h-d3" style="color:rgba(255,255,255,0.55);font-size:16px;line-height:1.9;margin-bottom:40px;max-width:460px;">
+                        هزاران آگهی فعال از شهرک‌های صنعتی سراسر کشور — بدون واسطه، بدون کمیسیون
+                    </p>
+
+                    <!-- Social proof -->
+                    <div class="h-anim h-d4 hero-proof" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                        <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 16px;">
+                            <svg width="18" height="18" fill="none" stroke="#93c5fd" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <div>
+                                <div style="color:white;font-size:13px;font-weight:800;">+۴۸٬۰۰۰</div>
+                                <div style="color:rgba(255,255,255,0.45);font-size:11px;">کاربر فعال</div>
+                            </div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 16px;">
+                            <svg width="18" height="18" fill="none" stroke="#34d399" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            <div>
+                                <div style="color:white;font-size:13px;font-weight:800;">بدون کمیسیون</div>
+                                <div style="color:rgba(255,255,255,0.45);font-size:11px;">مستقیم با مالک</div>
+                            </div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 16px;">
+                            <svg width="18" height="18" fill="none" stroke="#60a5fa" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <div>
+                                <div style="color:white;font-size:13px;font-weight:800;">۳۱ استان</div>
+                                <div style="color:rgba(255,255,255,0.45);font-size:11px;">سراسر ایران</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ستون کارت جستجو -->
+                <div class="search-card h-anim h-d2" style="padding:28px 32px;">
+                    <!-- تب‌ها -->
+                    <div style="display:flex;gap:4px;background:rgba(255,255,255,0.06);padding:5px;border-radius:12px;margin-bottom:24px;border:1px solid rgba(255,255,255,0.08);">
+                        <button class="search-tab active" onclick="setTab(this,'sale')" style="flex:1;">خرید</button>
+                        <button class="search-tab" onclick="setTab(this,'rent')" style="flex:1;">اجاره</button>
+                        <button class="search-tab" onclick="setTab(this,'buy')" style="flex:1;">رهن</button>
+                    </div>
+
+                    <!-- فرم جستجو -->
+                    <form action="{% url 'listings' %}" method="get">
+                        <input type="hidden" name="status" id="searchStatusInput" value="sale">
+                        <div style="display:flex;flex-direction:column;gap:14px;">
+                            <div>
+                                <label style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.45);margin-bottom:7px;display:block;letter-spacing:.4px;">نوع ملک</label>
+                                <select name="category" class="search-select">
+                                    <option value="">همه دسته‌ها</option>
+                                    <option value="land">زمین صنعتی</option>
+                                    <option value="factory">کارخانه</option>
+                                    <option value="machinery">ماشین‌آلات</option>
+                                    <option value="import">واردات</option>
+                                    <option value="export">صادرات</option>
+                                    <option value="product">محصولات</option>
+                                </select>
+                            </div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                                <div>
+                                    <label style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.45);margin-bottom:7px;display:block;letter-spacing:.4px;">استان</label>
+                                    <select name="province" class="search-select">
+                                        <option value="">همه استان‌ها</option>
+                                        <option>تهران</option><option>البرز</option><option>اصفهان</option>
+                                        <option>فارس</option><option>خراسان رضوی</option><option>قم</option>
+                                        <option>همدان</option><option>قزوین</option><option>کرمانشاه</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.45);margin-bottom:7px;display:block;letter-spacing:.4px;">شهر</label>
+                                    <select name="city" class="search-select">
+                                        <option value="">همه شهرها</option>
+                                        <option>تهران</option><option>کرج</option><option>اصفهان</option>
+                                        <option>شیراز</option><option>مشهد</option><option>قم</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="hero-search-btn">
+                                <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                                جستجو در آگهی‌ها
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- تگ‌های پرجستجو -->
+                    <div style="margin-top:18px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                        <span style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:600;">پرجستجو:</span>
+                        <a href="{% url 'listings' %}?q=کارخانه+تهران" class="search-hot-tag">کارخانه تهران</a>
+                        <a href="{% url 'listings' %}?q=سوله+کرج" class="search-hot-tag">سوله کرج</a>
+                        <a href="{% url 'listings' %}?category=land" class="search-hot-tag">زمین صنعتی</a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 </section>
 
-<div class="stats-strip">
+<!-- نوار آمار -->
+<div style="background:rgba(10,18,36,0.98);border-bottom:1px solid rgba(255,255,255,0.07);">
     <div class="container">
-        <div class="stat-item">
-            <div class="stat-num">{{ stats.land }}</div>
-            <div class="stat-label" data-i18n="stat.land">🌍 زمین صنعتی</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-num">{{ stats.factory }}</div>
-            <div class="stat-label" data-i18n="stat.factory">🏭 کارخانه</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-num">{{ stats.machinery }}</div>
-            <div class="stat-label" data-i18n="stat.machinery">⚙️ ماشین‌آلات</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-num">{{ stats.import }}</div>
-            <div class="stat-label" data-i18n="stat.import">📦 واردکننده</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-num">{{ stats.export }}</div>
-            <div class="stat-label" data-i18n="stat.export">🚢 صادرکننده</div>
+        <div style="display:flex;justify-content:center;">
+            <div class="stat-item">
+                <div class="stat-num">{{ stats.land }}</div>
+                <div class="stat-label">🌍 زمین صنعتی</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">{{ stats.factory }}</div>
+                <div class="stat-label">🏭 کارخانه</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">{{ stats.machinery }}</div>
+                <div class="stat-label">⚙️ ماشین‌آلات</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">{{ stats.import }}</div>
+                <div class="stat-label">📦 واردکننده</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">{{ stats.export }}</div>
+                <div class="stat-label">🚢 صادرکننده</div>
+            </div>
         </div>
     </div>
 </div>
@@ -216,4 +309,15 @@
     </div>
 </section>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function setTab(btn, status) {
+    document.querySelectorAll('.search-tab').forEach(function(t){ t.classList.remove('active'); });
+    btn.classList.add('active');
+    var inp = document.getElementById('searchStatusInput');
+    if (inp) inp.value = status;
+}
+</script>
 {% endblock %}
