@@ -185,95 +185,123 @@
     </div>
 </section>
 
-<section class="section section-alt hero-next-section">
-    <div class="container">
-        <div class="cats-hd">
-            <div>
-                <p class="cats-eye">حوزه‌های تخصصی</p>
-                <h2 class="cats-title">کدام حوزه صنعتی را دنبال می‌کنید؟</h2>
-            </div>
-            <a href="{% url 'listings' %}" class="cats-all">
-                مشاهده همه آگهی‌ها
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 5 5 12 12 19"/></svg>
-            </a>
+<section class="icat-section hero-next-section">
+    <div class="icat-bg-dots"></div>
+    <div class="container" style="position:relative;z-index:1;">
+
+        <div class="icat-header">
+            <p class="icat-eye">حوزه‌های تخصصی</p>
+            <h2 class="icat-title">کدام حوزه صنعتی را دنبال می‌کنید؟</h2>
+            <p class="icat-sub">بزرگ‌ترین پلتفرم آگهی‌های صنعتی ایران — خرید، فروش، اجاره و تامین کالا بدون واسطه</p>
         </div>
-        <div class="cats-grid">
 
-            <a href="{% url 'category' 'land' %}" class="ccat" style="--ac:#2563EB;--al:#EFF6FF;">
-                <div class="ccat-ic">
-                    <svg width="26" height="26" fill="none" stroke="var(--ac)" stroke-width="1.8" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+        <div class="icat-grid">
+
+            <a href="{% url 'category' 'land' %}" class="icat-card">
+                <div class="icat-icon-wrap">
+                    <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
+                        <line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>
+                        <line x1="4" y1="10" x2="6" y2="10"/><line x1="10" y1="14" x2="14" y2="14"/><line x1="18" y1="10" x2="21" y2="10"/>
+                    </svg>
                 </div>
-                <div class="ccat-body">
-                    <div class="ccat-name">زمین صنعتی</div>
-                    <div class="ccat-cnt">{{ stats.land }} آگهی فعال</div>
-                </div>
-                <div class="ccat-arr">
-                    <svg width="18" height="18" fill="none" stroke="var(--ac)" stroke-width="2.2" viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 5 5 12 12 19"/></svg>
+                <div class="icat-name">زمین صنعتی</div>
+                <div class="icat-desc">خرید، فروش و اجاره زمین در شهرک‌های صنعتی سراسر ایران</div>
+                <div class="icat-footer">
+                    <span class="icat-count">{{ stats.land }} آگهی فعال</span>
+                    <span class="icat-more">مشاهده
+                        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 5 5 12 12 19"/></svg>
+                    </span>
                 </div>
             </a>
 
-            <a href="{% url 'category' 'factory' %}" class="ccat" style="--ac:#F59E0B;--al:#FFFBEB;">
-                <div class="ccat-ic">
-                    <svg width="26" height="26" fill="none" stroke="var(--ac)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 20V8l6-4v4l6-4v4l6-4v16H2z"/><rect x="9" y="14" width="3" height="6"/><rect x="15" y="14" width="3" height="6"/><rect x="3" y="14" width="3" height="6"/></svg>
+            <a href="{% url 'category' 'factory' %}" class="icat-card">
+                <div class="icat-icon-wrap">
+                    <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="M2 20V8l6-4v4l6-4v4l6-4v16H2z"/>
+                        <rect x="9" y="14" width="3" height="6"/><rect x="15" y="14" width="3" height="6"/><rect x="3" y="14" width="3" height="6"/>
+                        <line x1="2" y1="12" x2="20" y2="12"/>
+                    </svg>
                 </div>
-                <div class="ccat-body">
-                    <div class="ccat-name">کارخانه</div>
-                    <div class="ccat-cnt">{{ stats.factory }} آگهی فعال</div>
-                </div>
-                <div class="ccat-arr">
-                    <svg width="18" height="18" fill="none" stroke="var(--ac)" stroke-width="2.2" viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 5 5 12 12 19"/></svg>
-                </div>
-            </a>
-
-            <a href="{% url 'category' 'machinery' %}" class="ccat" style="--ac:#6366F1;--al:#EEF2FF;">
-                <div class="ccat-ic">
-                    <svg width="26" height="26" fill="none" stroke="var(--ac)" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                </div>
-                <div class="ccat-body">
-                    <div class="ccat-name">ماشین‌آلات</div>
-                    <div class="ccat-cnt">{{ stats.machinery }} آگهی فعال</div>
-                </div>
-                <div class="ccat-arr">
-                    <svg width="18" height="18" fill="none" stroke="var(--ac)" stroke-width="2.2" viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 5 5 12 12 19"/></svg>
+                <div class="icat-name">کارخانه</div>
+                <div class="icat-desc">سالن‌های تولید، انبار و واحدهای صنعتی آماده بهره‌برداری</div>
+                <div class="icat-footer">
+                    <span class="icat-count">{{ stats.factory }} آگهی فعال</span>
+                    <span class="icat-more">مشاهده
+                        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 5 5 12 12 19"/></svg>
+                    </span>
                 </div>
             </a>
 
-            <a href="{% url 'category' 'import' %}" class="ccat" style="--ac:#10B981;--al:#ECFDF5;">
-                <div class="ccat-ic">
-                    <svg width="26" height="26" fill="none" stroke="var(--ac)" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
+            <a href="{% url 'category' 'machinery' %}" class="icat-card">
+                <div class="icat-icon-wrap">
+                    <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
                 </div>
-                <div class="ccat-body">
-                    <div class="ccat-name">واردات</div>
-                    <div class="ccat-cnt">{{ stats.import }} آگهی فعال</div>
-                </div>
-                <div class="ccat-arr">
-                    <svg width="18" height="18" fill="none" stroke="var(--ac)" stroke-width="2.2" viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 5 5 12 12 19"/></svg>
-                </div>
-            </a>
-
-            <a href="{% url 'category' 'export' %}" class="ccat" style="--ac:#EF4444;--al:#FEF2F2;">
-                <div class="ccat-ic">
-                    <svg width="26" height="26" fill="none" stroke="var(--ac)" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="16 17 12 21 8 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/><polyline points="16 7 12 3 8 7"/><line x1="12" y1="3" x2="12" y2="12"/></svg>
-                </div>
-                <div class="ccat-body">
-                    <div class="ccat-name">صادرات</div>
-                    <div class="ccat-cnt">{{ stats.export }} آگهی فعال</div>
-                </div>
-                <div class="ccat-arr">
-                    <svg width="18" height="18" fill="none" stroke="var(--ac)" stroke-width="2.2" viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 5 5 12 12 19"/></svg>
+                <div class="icat-name">ماشین‌آلات</div>
+                <div class="icat-desc">خرید و فروش تجهیزات صنعتی، CNC، دستگاه‌های تولید و خطوط بسته‌بندی</div>
+                <div class="icat-footer">
+                    <span class="icat-count">{{ stats.machinery }} آگهی فعال</span>
+                    <span class="icat-more">مشاهده
+                        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 5 5 12 12 19"/></svg>
+                    </span>
                 </div>
             </a>
 
-            <a href="{% url 'category' 'product' %}" class="ccat" style="--ac:#EC4899;--al:#FDF2F8;">
-                <div class="ccat-ic">
-                    <svg width="26" height="26" fill="none" stroke="var(--ac)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <a href="{% url 'category' 'import' %}" class="icat-card">
+                <div class="icat-icon-wrap">
+                    <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                        <line x1="12" y1="22.08" x2="12" y2="12"/>
+                    </svg>
                 </div>
-                <div class="ccat-body">
-                    <div class="ccat-name">محصولات</div>
-                    <div class="ccat-cnt">{{ stats.product }} آگهی فعال</div>
+                <div class="icat-name">واردات</div>
+                <div class="icat-desc">واردکنندگان مواد اولیه، قطعات و محصولات از سراسر جهان</div>
+                <div class="icat-footer">
+                    <span class="icat-count">{{ stats.import }} آگهی فعال</span>
+                    <span class="icat-more">مشاهده
+                        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 5 5 12 12 19"/></svg>
+                    </span>
                 </div>
-                <div class="ccat-arr">
-                    <svg width="18" height="18" fill="none" stroke="var(--ac)" stroke-width="2.2" viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 5 5 12 12 19"/></svg>
+            </a>
+
+            <a href="{% url 'category' 'export' %}" class="icat-card">
+                <div class="icat-icon-wrap">
+                    <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="M2 21c.6.5 1.2 1 2.5 1C7 22 7 20 9.5 20s2.5 2 5 2 2.5-2 5-2c1.3 0 1.9.5 2.5 1"/>
+                        <path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 4.56 2.28 8.12 5.38 9.94"/>
+                        <path d="M19 13V7a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v6"/>
+                        <path d="M12 10v4"/><path d="M12 2v3"/>
+                    </svg>
+                </div>
+                <div class="icat-name">صادرات</div>
+                <div class="icat-desc">صادرکنندگان کالا و محصولات صنعتی ایرانی به بازارهای جهانی</div>
+                <div class="icat-footer">
+                    <span class="icat-count">{{ stats.export }} آگهی فعال</span>
+                    <span class="icat-more">مشاهده
+                        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 5 5 12 12 19"/></svg>
+                    </span>
+                </div>
+            </a>
+
+            <a href="{% url 'category' 'product' %}" class="icat-card">
+                <div class="icat-icon-wrap">
+                    <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <path d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
+                </div>
+                <div class="icat-name">محصولات</div>
+                <div class="icat-desc">خرید و فروش مستقیم محصولات صنعتی، مواد اولیه و قطعات یدکی</div>
+                <div class="icat-footer">
+                    <span class="icat-count">{{ stats.product }} آگهی فعال</span>
+                    <span class="icat-more">مشاهده
+                        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 5 5 12 12 19"/></svg>
+                    </span>
                 </div>
             </a>
 
@@ -281,35 +309,64 @@
     </div>
 </section>
 
-{% if featured %}
-<section class="section">
-    <div class="container">
-        <div class="section-head">
-            <h2 class="section-title">
-                <span class="section-title-bar"></span>
-                <span data-i18n="home.sec.featured">آگهی‌های ویژه</span>
-            </h2>
-            <a href="{% url 'listings' %}" class="see-all" data-i18n="home.see_all">مشاهده همه ←</a>
+{% if False %}
+<section class="lsec lsec-featured">
+    <div class="lsec-bg-dots"></div>
+    <div class="container" style="position:relative;z-index:1;">
+        <div class="lsec-head">
+            <div style="display:flex;align-items:center;gap:14px;">
+                <span class="section-title-bar" style="background:#2563EB;height:26px;"></span>
+                <div>
+                    <div style="font-size:11px;font-weight:800;letter-spacing:1.5px;color:#60a5fa;margin-bottom:4px;text-transform:uppercase;">آگهی‌های برگزیده</div>
+                    <h2 style="font-size:clamp(18px,2vw,24px);font-weight:900;color:white;margin:0;">آگهی‌های ویژه</h2>
+                </div>
+                <span class="vip-badge-head">★ ویژه</span>
+            </div>
+            <a href="{% url 'listings' %}" class="lsec-all">
+                مشاهده همه
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 5 5 12 12 19"/></svg>
+            </a>
         </div>
         <div class="listings-grid">
             {% for item in featured %}
-            <a href="{% url 'listing_detail' item.pk %}" class="listing-card">
-                <div class="card-img">
-                    {% if item.image %}<img src="{{ item.image.url }}" alt="{{ item.title }}">
-                    {% else %}<div class="card-img-placeholder">{% if item.category == 'land' %}🌍{% elif item.category == 'factory' %}🏭{% elif item.category == 'machinery' %}⚙️{% elif item.category == 'import' %}📦{% elif item.category == 'product' %}🛍️{% else %}🚢{% endif %}</div>{% endif %}
-                    <span class="card-badge badge-{{ item.status }}">{{ item.get_status_display }}</span>
-                    <span class="badge-vip" data-i18n="badge.vip">ویژه</span>
-                </div>
-                <div class="card-body">
-                    <div class="card-cat">{{ item.get_category_display }}</div>
-                    <div class="card-title">{{ item.title }}</div>
-                    <div class="card-loc">📍 {{ item.location }}</div>
-                    <div class="card-foot">
-                        <div>
-                            <div class="card-price">{{ item.formatted_price }}</div>
-                            {% if item.price %}<div class="card-price-unit" data-i18n="price.unit">تومان</div>{% endif %}
+            <a href="{% url 'listing_detail' item.pk %}" class="lcard">
+                <div class="lcard-img">
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    {% else %}
+                        <div class="lcard-ph lcard-ph--{{ item.category }}">
+                            <div class="lcard-ph-grid"></div>
+                            <div class="lcard-ph-glow"></div>
+                            <div class="lcard-ph-icon">
+                                {% if item.category == 'land' %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+                                {% elif item.category == 'factory' %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 20V8l6-4v4l6-4v4l6-4v16H2z"/><rect x="9" y="14" width="3" height="6"/><rect x="15" y="14" width="3" height="6"/><rect x="3" y="14" width="3" height="6"/></svg>
+                                {% elif item.category == 'machinery' %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                                {% elif item.category == 'import' %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
+                                {% elif item.category == 'export' %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 21c.6.5 1.2 1 2.5 1C7 22 7 20 9.5 20s2.5 2 5 2 2.5-2 5-2c1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 4.56 2.28 8.12 5.38 9.94"/><path d="M19 13V7a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v6"/></svg>
+                                {% else %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                                {% endif %}
+                            </div>
                         </div>
-                        {% if item.area %}<div class="card-area">📐 {{ item.area|floatformat:0 }} م²</div>{% endif %}
+                    {% endif %}
+                    <span class="lcard-status lcard-status--{{ item.status }}">{{ item.get_status_display }}</span>
+                    <span class="lcard-vip">★ ویژه</span>
+                </div>
+                <div class="lcard-body">
+                    <div class="lcard-cat">{{ item.get_category_display }}</div>
+                    <div class="lcard-title">{{ item.title }}</div>
+                    <div class="lcard-loc">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        {{ item.location }}
+                    </div>
+                    <div class="lcard-foot">
+                        <div>
+                            <div class="lcard-price">{{ item.formatted_price }}</div>
+                            {% if item.price %}<div class="lcard-price-unit">تومان</div>{% endif %}
+                        </div>
+                        {% if item.area %}<div class="lcard-area">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 3H3v18h18V3z"/><path d="M21 9H3M21 15H3M9 3v18M15 3v18"/></svg>
+                            {{ item.area|floatformat:0 }} م²
+                        </div>{% endif %}
                     </div>
                 </div>
             </a>
@@ -319,45 +376,75 @@
 </section>
 {% endif %}
 
-<section class="section section-alt">
-    <div class="container">
-        <div class="section-head">
-            <h2 class="section-title">
-                <span class="section-title-bar"></span>
-                <span data-i18n="home.sec.recent">جدیدترین آگهی‌ها</span>
-            </h2>
-            <a href="{% url 'listings' %}" class="see-all" data-i18n="home.see_all">مشاهده همه ←</a>
+<section class="lsec lsec-recent">
+    <div class="lsec-bg-dots"></div>
+    <div class="container" style="position:relative;z-index:1;">
+        <div class="lsec-head">
+            <div style="display:flex;align-items:center;gap:14px;direction:rtl;">
+                <span class="section-title-bar" style="background:#2563EB;height:26px;flex-shrink:0;"></span>
+                <div>
+                    <div style="font-size:11px;font-weight:800;letter-spacing:1.5px;color:#2563eb;margin-bottom:4px;text-transform:uppercase;">تازه‌ترین آگهی‌ها</div>
+                    <h2 style="font-size:clamp(18px,2vw,24px);font-weight:900;color:#0f172a;margin:0;">جدیدترین و ویژه‌ترین آگهی‌ها</h2>
+                </div>
+            </div>
+            <a href="{% url 'listings' %}" class="lsec-all">
+                مشاهده همه
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 5 5 12 12 19"/></svg>
+            </a>
         </div>
         {% if recent %}
         <div class="listings-grid">
             {% for item in recent %}
-            <a href="{% url 'listing_detail' item.pk %}" class="listing-card">
-                <div class="card-img">
-                    {% if item.image %}<img src="{{ item.image.url }}" alt="{{ item.title }}">
-                    {% else %}<div class="card-img-placeholder">{% if item.category == 'land' %}🌍{% elif item.category == 'factory' %}🏭{% elif item.category == 'machinery' %}⚙️{% elif item.category == 'import' %}📦{% elif item.category == 'product' %}🛍️{% else %}🚢{% endif %}</div>{% endif %}
-                    <span class="card-badge badge-{{ item.status }}">{{ item.get_status_display }}</span>
-                    {% if item.is_featured %}<span class="badge-vip" data-i18n="badge.vip">ویژه</span>{% endif %}
-                </div>
-                <div class="card-body">
-                    <div class="card-cat">{{ item.get_category_display }}</div>
-                    <div class="card-title">{{ item.title }}</div>
-                    <div class="card-loc">📍 {{ item.location }}</div>
-                    <div class="card-foot">
-                        <div>
-                            <div class="card-price">{{ item.formatted_price }}</div>
-                            {% if item.price %}<div class="card-price-unit" data-i18n="price.unit">تومان</div>{% endif %}
+            <a href="{% url 'listing_detail' item.pk %}" class="lcard">
+                <div class="lcard-img">
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    {% else %}
+                        <div class="lcard-ph lcard-ph--{{ item.category }}">
+                            <div class="lcard-ph-grid"></div>
+                            <div class="lcard-ph-glow"></div>
+                            <div class="lcard-ph-icon">
+                                {% if item.category == 'land' %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+                                {% elif item.category == 'factory' %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 20V8l6-4v4l6-4v4l6-4v16H2z"/><rect x="9" y="14" width="3" height="6"/><rect x="15" y="14" width="3" height="6"/><rect x="3" y="14" width="3" height="6"/></svg>
+                                {% elif item.category == 'machinery' %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                                {% elif item.category == 'import' %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
+                                {% elif item.category == 'export' %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 21c.6.5 1.2 1 2.5 1C7 22 7 20 9.5 20s2.5 2 5 2 2.5-2 5-2c1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 4.56 2.28 8.12 5.38 9.94"/><path d="M19 13V7a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v6"/></svg>
+                                {% else %}<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                                {% endif %}
+                            </div>
                         </div>
-                        {% if item.area %}<div class="card-area">📐 {{ item.area|floatformat:0 }} م²</div>{% endif %}
+                    {% endif %}
+                    <span class="lcard-status lcard-status--{{ item.status }}">{{ item.get_status_display }}</span>
+                    {% if item.is_featured %}<span class="lcard-vip">★ ویژه</span>{% endif %}
+                </div>
+                <div class="lcard-body">
+                    <div class="lcard-cat">{{ item.get_category_display }}</div>
+                    <div class="lcard-title">{{ item.title }}</div>
+                    <div class="lcard-loc">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        {{ item.location }}
+                    </div>
+                    <div class="lcard-foot">
+                        <div>
+                            <div class="lcard-price">{{ item.formatted_price }}</div>
+                            {% if item.price %}<div class="lcard-price-unit">تومان</div>{% endif %}
+                        </div>
+                        {% if item.area %}<div class="lcard-area">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 3H3v18h18V3z"/><path d="M21 9H3M21 15H3M9 3v18M15 3v18"/></svg>
+                            {{ item.area|floatformat:0 }} م²
+                        </div>{% endif %}
                     </div>
                 </div>
             </a>
             {% endfor %}
         </div>
         {% else %}
-        <div class="empty">
-            <div class="empty-icon">📋</div>
-            <h3 data-i18n="home.empty.title">هنوز آگهی‌ای ثبت نشده</h3>
-            <p data-i18n="home.empty.desc">اولین آگهی را از پنل ادمین ثبت کنید.</p>
+        <div style="text-align:center;padding:72px 24px;color:rgba(255,255,255,0.3);">
+            <div style="width:64px;height:64px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+                <svg width="28" height="28" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <h3 style="color:rgba(255,255,255,0.5);font-size:16px;margin-bottom:6px;">هنوز آگهی‌ای ثبت نشده</h3>
+            <p style="font-size:13px;">اولین آگهی را از پنل ادمین ثبت کنید.</p>
         </div>
         {% endif %}
     </div>
@@ -407,124 +494,395 @@
     z-index: 10;
 }
 
-/* header section 2 */
-.cats-hd {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    direction: rtl;
-    margin-bottom: 36px;
-    padding-top: 8px;
-}
-.cats-eye {
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: #2563EB;
-    margin-bottom: 8px;
-}
-.cats-title {
-    font-size: clamp(20px, 2.2vw, 28px);
-    font-weight: 900;
-    color: #0f172a;
-    margin: 0;
-}
-.cats-all {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    font-weight: 700;
-    color: #2563EB;
-    text-decoration: none;
-    white-space: nowrap;
-    padding-bottom: 2px;
-    border-bottom: 1.5px solid transparent;
-    transition: border-color 0.2s;
-}
-.cats-all:hover { border-bottom-color: #2563EB; }
-
-/* grid */
-.cats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    direction: rtl;
-}
-
-/* card */
-.ccat {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    background: white;
-    border: 1.5px solid #e8eef5;
-    border-radius: 16px;
-    padding: 20px 22px;
-    text-decoration: none;
+/* ===== LISTING SECTIONS ===== */
+.lsec {
+    padding: 72px 0;
     position: relative;
     overflow: hidden;
-    transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
 }
-.ccat::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--al);
-    opacity: 0;
-    transition: opacity 0.22s;
-    pointer-events: none;
+.lsec-featured {
+    background: #ffffff;
 }
-.ccat:hover {
-    border-color: var(--ac);
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.09);
+.lsec-recent {
+    background: #ffffff;
+    padding-top: 24px;
 }
-.ccat:hover::after { opacity: 1; }
-.ccat:hover .ccat-ic { background: var(--ac); }
-.ccat:hover .ccat-ic svg { stroke: white; }
-.ccat:hover .ccat-arr { opacity: 1; transform: none; }
+.lsec-bg-dots {
+    display: none;
+}
 
-.ccat-ic {
-    width: 54px;
-    height: 54px;
-    border-radius: 14px;
-    background: var(--al);
+/* Section header */
+.lsec-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    direction: rtl;
+    margin-bottom: 40px;
+}
+.vip-badge-head {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #fffbeb;
+    border: 1.5px solid #fde68a;
+    color: #d97706;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+}
+.lsec-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #2563eb;
+    text-decoration: none;
+    padding: 8px 18px;
+    border: 1.5px solid #dbeafe;
+    border-radius: 100px;
+    background: #eff6ff;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.lsec-all:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: white;
+}
+/* Section sub-label */
+.lsec-head [style*="color:#60a5fa"] {
+    color: #2563eb !important;
+}
+.lsec-head h2 {
+    color: #0f172a !important;
+}
+
+/* ===== LISTING CARD ===== */
+.lcard {
+    background: #ffffff;
+    border: 1.5px solid #e8eef5;
+    border-radius: 18px;
+    overflow: hidden;
+    display: block;
+    text-decoration: none;
+    transition: transform 0.28s cubic-bezier(0.34,1.4,0.64,1), border-color 0.25s, box-shadow 0.25s;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.lcard:hover {
+    transform: translateY(-8px);
+    border-color: #93c5fd;
+    box-shadow: 0 20px 50px rgba(37,99,235,0.13), 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* Card image area */
+.lcard-img {
+    aspect-ratio: 16/9;
+    position: relative;
+    overflow: hidden;
+}
+.lcard-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+.lcard:hover .lcard-img img { transform: scale(1.06); }
+
+/* Card image zoom on hover */
+.lcard-img img { transition: transform 0.5s ease; }
+.lcard:hover .lcard-img img { transform: scale(1.06); }
+
+/* Placeholder */
+.lcard-ph {
+    width: 100%; height: 100%;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 1;
-    transition: background 0.22s;
+    overflow: hidden;
 }
-.ccat-ic svg { transition: stroke 0.22s; }
+.lcard-ph--land     { background: linear-gradient(145deg, #0c2461 0%, #1a52a8 50%, #0f3880 100%); }
+.lcard-ph--factory  { background: linear-gradient(145deg, #1a3a0c 0%, #2d6317 50%, #1e4510 100%); }
+.lcard-ph--machinery{ background: linear-gradient(145deg, #2d1b69 0%, #5b3db5 50%, #3a2280 100%); }
+.lcard-ph--import   { background: linear-gradient(145deg, #0a3d52 0%, #0e6b8a 50%, #0b4d6b 100%); }
+.lcard-ph--export   { background: linear-gradient(145deg, #4a0e6e 0%, #8b2fc9 50%, #5c1588 100%); }
+.lcard-ph--product  { background: linear-gradient(145deg, #6b2400 0%, #c44b0a 50%, #872f00 100%); }
 
-.ccat-body {
-    flex: 1;
+/* Subtle dot grid overlay */
+.lcard-ph-grid {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Glow blob */
+.lcard-ph-glow {
+    position: absolute;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    filter: blur(55px);
+    opacity: 0.5;
+    transition: opacity 0.3s, transform 0.4s;
+}
+.lcard:hover .lcard-ph-glow { opacity: 0.75; transform: scale(1.15); }
+.lcard-ph--land     .lcard-ph-glow { background: #3b82f6; }
+.lcard-ph--factory  .lcard-ph-glow { background: #22c55e; }
+.lcard-ph--machinery.lcard-ph-glow { background: #8b5cf6; }
+.lcard-ph--machinery .lcard-ph-glow { background: #8b5cf6; }
+.lcard-ph--import   .lcard-ph-glow { background: #06b6d4; }
+.lcard-ph--export   .lcard-ph-glow { background: #a855f7; }
+.lcard-ph--product  .lcard-ph-glow { background: #f97316; }
+
+/* Icon box */
+.lcard-ph-icon {
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    width: 80px; height: 80px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.12);
+    border: 1.5px solid rgba(255,255,255,0.22);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    transition: transform 0.3s cubic-bezier(0.34,1.4,0.64,1), background 0.3s;
 }
-.ccat-name {
-    font-size: 15px;
+.lcard:hover .lcard-ph-icon {
+    transform: scale(1.1) translateY(-2px);
+    background: rgba(255,255,255,0.18);
+}
+.lcard-ph-icon { color: rgba(255,255,255,0.92); }
+.lcard-ph-icon svg { stroke: currentColor; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3)); }
+
+/* Badges */
+.lcard-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 13px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.lcard-status--sale { background: rgba(219,234,254,0.92); color: #1d4ed8; }
+.lcard-status--rent { background: rgba(209,250,229,0.92); color: #065f46; }
+.lcard-status--buy  { background: rgba(237,233,254,0.92); color: #5b21b6; }
+
+.lcard-vip {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(254,243,199,0.92);
+    color: #92400e;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Card body */
+.lcard-body {
+    padding: 16px 18px 20px;
+}
+.lcard-cat {
+    font-size: 10px;
     font-weight: 800;
-    color: #0f172a;
-    margin-bottom: 4px;
+    letter-spacing: 1px;
+    color: #2563eb;
+    text-transform: uppercase;
+    margin-bottom: 7px;
 }
-.ccat-cnt {
+.lcard-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.8em;
+}
+.lcard-loc {
+    display: flex;
+    align-items: center;
+    gap: 5px;
     font-size: 12px;
     color: #94a3b8;
-    font-weight: 500;
+    margin-bottom: 13px;
+}
+.lcard-foot {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid #f1f5f9;
+}
+.lcard-price {
+    font-size: 15px;
+    font-weight: 800;
+    color: #1d4ed8;
+    line-height: 1;
+}
+.lcard-price-unit {
+    font-size: 10px;
+    color: #94a3b8;
+    margin-top: 3px;
+}
+.lcard-area {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #94a3b8;
 }
 
-.ccat-arr {
+/* ===== INDUSTRY CATEGORIES SECTION ===== */
+.icat-section {
+    background: #f0f4ff;
+    padding: 80px 0 72px;
     position: relative;
-    z-index: 1;
-    opacity: 0;
-    transform: translateX(6px);
-    transition: opacity 0.22s, transform 0.22s;
+    overflow: hidden;
+    clip-path: polygon(40px 0, 100% 0, 100% 100%, 0 100%, 0 40px);
+    margin-top: -44px;
+    z-index: 10;
 }
+.icat-bg-dots {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(37,99,235,0.1) 1.5px, transparent 1.5px);
+    background-size: 26px 26px;
+    pointer-events: none;
+}
+.icat-header {
+    text-align: center;
+    direction: rtl;
+    margin-bottom: 56px;
+}
+.icat-eye {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: #2563eb;
+    margin-bottom: 14px;
+}
+.icat-title {
+    font-size: clamp(22px, 2.8vw, 34px);
+    font-weight: 900;
+    color: #0f172a;
+    margin-bottom: 14px;
+    letter-spacing: -0.4px;
+}
+.icat-sub {
+    font-size: 15px;
+    color: #64748b;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.85;
+}
+
+/* Grid */
+.icat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    direction: rtl;
+}
+
+/* Card — no border, just floating content */
+.icat-card {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 20px 20px 28px;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.26s ease;
+}
+.icat-card:hover { transform: translateY(-6px); }
+
+/* Icon — no container box, just the icon itself */
+.icat-icon-wrap {
+    width: auto; height: auto;
+    background: none;
+    border: none;
+    color: #4c5fad;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    flex-shrink: 0;
+    transition: color 0.25s, transform 0.25s;
+}
+.icat-card:hover .icat-icon-wrap {
+    color: #2563eb;
+    transform: translateY(-3px);
+}
+.icat-icon-wrap svg { stroke: currentColor; width: 72px; height: 72px; stroke-width: 1.3; }
+
+/* Text */
+.icat-name {
+    font-size: 19px;
+    font-weight: 800;
+    color: #1e2a4a;
+    margin-bottom: 14px;
+    letter-spacing: -0.3px;
+}
+.icat-desc {
+    font-size: 14px;
+    color: #6b7898;
+    line-height: 1.9;
+    margin-bottom: 24px;
+    flex: 1;
+    max-width: 260px;
+}
+
+/* Footer */
+.icat-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    direction: rtl;
+    gap: 10px;
+}
+.icat-count { display: none; }
+.icat-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 800;
+    color: #4c5fad;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: gap 0.2s, color 0.2s;
+}
+.icat-more::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1.5px;
+    background: currentColor;
+    flex-shrink: 0;
+}
+.icat-card:hover .icat-more { color: #2563eb; gap: 12px; }
 </style>
 {% endblock %}
 
